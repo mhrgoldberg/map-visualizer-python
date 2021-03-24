@@ -1,85 +1,85 @@
-import React, { useState } from "react";
-import { Redirect } from 'react-router-dom';
-import { signUp } from '../../services/auth';
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { Redirect } from 'react-router-dom'
+import { useAuthErrors } from '../../hooks/errors'
+import { signUp } from '../../store/auth'
+import { FormField } from '../utility'
+import ErrorsList from '../utility/errors'
 
-const SignUpForm = ({authenticated, setAuthenticated}) => {
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [repeatPassword, setRepeatPassword] = useState("");
+const SignUpForm = ({ authenticated }) => {
+  const errors = useAuthErrors()
+  const dispatch = useDispatch()
+  const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [repeatPassword, setRepeatPassword] = useState('')
 
   const onSignUp = async (e) => {
-    e.preventDefault();
+    e.preventDefault()
     if (password === repeatPassword) {
-      const user = await signUp(username, email, password);
-      if (!user.errors) {
-        setAuthenticated(true);
-      }
+      dispatch(signUp(username, email, password))
     }
-  };
-
-  const updateUsername = (e) => {
-    setUsername(e.target.value);
-  };
-
-  const updateEmail = (e) => {
-    setEmail(e.target.value);
-  };
-
-  const updatePassword = (e) => {
-    setPassword(e.target.value);
-  };
-
-  const updateRepeatPassword = (e) => {
-    setRepeatPassword(e.target.value);
-  };
-
-  if (authenticated) {
-    return <Redirect to="/" />;
   }
 
+  const updateUsername = (e) => {
+    setUsername(e.target.value)
+  }
+
+  const updateEmail = (e) => {
+    setEmail(e.target.value)
+  }
+
+  const updatePassword = (e) => {
+    setPassword(e.target.value)
+  }
+
+  const updateRepeatPassword = (e) => {
+    setRepeatPassword(e.target.value)
+  }
+
+  if (authenticated) {
+    return <Redirect to="/" />
+  }
   return (
-    <form onSubmit={onSignUp}>
-      <div>
-        <label>User Name</label>
-        <input
+    <>
+      <ErrorsList errors={errors} />
+      <form onSubmit={onSignUp}>
+        <FormField
+          label="User Name"
           type="text"
           name="username"
           onChange={updateUsername}
           value={username}
-        ></input>
-      </div>
-      <div>
-        <label>Email</label>
-        <input
+          required={true}
+        />
+        <FormField
+          label="Email"
           type="text"
           name="email"
           onChange={updateEmail}
           value={email}
-        ></input>
-      </div>
-      <div>
-        <label>Password</label>
-        <input
+          required={true}
+        />
+        <FormField
+          label="Password"
           type="password"
           name="password"
           onChange={updatePassword}
           value={password}
-        ></input>
-      </div>
-      <div>
-        <label>Repeat Password</label>
-        <input
+          required={true}
+        />
+        <FormField
+          label="Confirm Password"
           type="password"
           name="repeat_password"
           onChange={updateRepeatPassword}
           value={repeatPassword}
           required={true}
-        ></input>
-      </div>
-      <button type="submit">Sign Up</button>
-    </form>
-  );
-};
+        />
+        <button type="submit">Sign Up</button>
+      </form>
+    </>
+  )
+}
 
-export default SignUpForm;
+export default SignUpForm

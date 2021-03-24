@@ -1,13 +1,14 @@
-import React from "react";
-import { logout } from "../../services/auth";
+import React from 'react'
+import { useDispatch } from 'react-redux'
+import { logout } from '../../store/auth'
 
-const LogoutButton = ({setAuthenticated}) => {
+const LogoutButton = () => {
+  const dispatch = useDispatch()
   const onLogout = async (e) => {
-    await logout();
-    setAuthenticated(false);
-  };
+    dispatch(logout())
+  }
 
-  return <button onClick={onLogout}>Logout</button>;
-};
+  return <button onClick={onLogout}>Logout</button>
+}
 
-export default LogoutButton;
+export default LogoutButton

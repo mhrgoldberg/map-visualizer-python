@@ -7,42 +7,46 @@ import ProtectedRoute from './components/auth/ProtectedRoute'
 import UsersList from './components/UsersList'
 import User from './components/User'
 import { authenticate } from './store/auth'
-import { useCurrentUser } from './hooks/user'
 
 function App() {
   const dispatch = useDispatch()
   const [loaded, setLoaded] = useState(false)
-  const authenticated = !!useCurrentUser()
 
   useEffect(() => {
     dispatch(authenticate()).then(() => {
       setLoaded(true)
     })
   }, [dispatch])
+
   if (!loaded) {
-    return null
+    return <p>loading...</p>
   }
 
   return (
     <BrowserRouter>
-      <NavBar authenticated={authenticated} />
+      <NavBar />
       <Route path="/login" exact={true}>
-        <AuthFormGrid authenticated={authenticated} form="Login" />
+        <AuthFormGrid form="Login" />
       </Route>
       <Route path="/sign-up" exact={true}>
-        <AuthFormGrid authenticated={authenticated} form="Sign Up" />
+        <AuthFormGrid form="Sign Up" />
       </Route>
-      <ProtectedRoute path="/users" exact={true} authenticated={authenticated}>
+      <ProtectedRoute path="/dashboard" exact={true}>
         <UsersList />
       </ProtectedRoute>
-      <ProtectedRoute
-        path="/users/:userId"
-        exact={true}
-        authenticated={authenticated}
-      >
+      <ProtectedRoute path="/routes" exact={true}>
+        <UsersList />
+      </ProtectedRoute>
+      <ProtectedRoute path="/routes/:id" exact={true}>
         <User />
       </ProtectedRoute>
-      <ProtectedRoute path="/" exact={true} authenticated={authenticated}>
+      <ProtectedRoute path="/workouts" exact={true}>
+        <User />
+      </ProtectedRoute>
+      <ProtectedRoute path="/workouts/id" exact={true}>
+        <User />
+      </ProtectedRoute>
+      <ProtectedRoute path="/" exact={true}>
         <h1>My Home Page</h1>
       </ProtectedRoute>
     </BrowserRouter>

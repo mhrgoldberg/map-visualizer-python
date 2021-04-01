@@ -4,7 +4,6 @@ import { NavLink, useLocation } from 'react-router-dom'
 
 export default function UnauthorizedRoutesNavbar() {
   const location = useLocation()
-  console.log(location.pathname)
   return (
     <Nav>
       {location.pathname !== '/login' && (
@@ -25,8 +24,14 @@ export default function UnauthorizedRoutesNavbar() {
   )
 }
 
-const Nav = styled.ul`
+const Nav = styled.nav`
   grid-column: 3;
   display: flex;
-  place-content: center space-around;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row-reverse;
+  a {
+    font-size: 1.6rem;
+    line-height: 1.5;
+  }
 `

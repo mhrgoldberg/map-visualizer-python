@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
 import { login } from '../../store/auth'
 import { useErrors } from '../../hooks/errors'
 import { FormField } from '../utility'
-import ErrorsList from '../utility/errors'
+import { useCurrentUser } from '../../hooks/user'
 
-const LoginForm = ({ authenticated }) => {
+export default function LoginForm() {
   const dispatch = useDispatch()
+  const authenticated = !!useCurrentUser()
   const [errors, useClearErrorsOnUnmount] = useErrors()
   useClearErrorsOnUnmount()
 
@@ -33,13 +34,13 @@ const LoginForm = ({ authenticated }) => {
     e.preventDefault()
     setForm({
       email: { value: form.email.value, updated: false },
-      password: { value: '', updated: false }
+      password: { value: form.password.value, updated: false }
     })
     dispatch(login(form.email.value, form.password.value))
   }
   // render
   if (authenticated) {
-    return <Redirect to="/" />
+    return <Redirect to="/dashboard" />
   }
 
   return (
@@ -72,5 +73,3 @@ const LoginForm = ({ authenticated }) => {
 const Form = styled.form`
   height: fit-content;
 `
-
-export default LoginForm

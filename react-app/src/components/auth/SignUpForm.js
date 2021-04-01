@@ -6,16 +6,15 @@ import { useErrors } from '../../hooks/errors'
 import { signUp } from '../../store/auth'
 import { setErrors } from '../../store/errors'
 import { FormField } from '../utility'
-import ErrorsList from '../utility/errors'
+import { useCurrentUser } from '../../hooks/user'
 
-const SignUpForm = ({ authenticated }) => {
+const SignUpForm = () => {
   const dispatch = useDispatch()
-
+  const authenticated = !!useCurrentUser()
   // Redux error handling
   const [errors, useClearErrorsOnUnmount] = useErrors()
   useClearErrorsOnUnmount()
   // Form State
-  // console.log(errors?.password)
   const [form, setForm] = useState({
     email: { value: '', updated: false },
     username: { value: '', updated: false },
@@ -39,8 +38,8 @@ const SignUpForm = ({ authenticated }) => {
     setForm({
       email: { value: form.email.value, updated: false },
       username: { value: form.username.value, updated: false },
-      password: { value: '', updated: false },
-      repeatPassword: { value: '', updated: false }
+      password: { value: form.password.value, updated: false },
+      repeatPassword: { value: form.repeatPassword.value, updated: false }
     })
     if (form.password.value === form.repeatPassword.value) {
       dispatch(
@@ -52,7 +51,7 @@ const SignUpForm = ({ authenticated }) => {
   }
 
   if (authenticated) {
-    return <Redirect to="/" />
+    return <Redirect to="/dashboard" />
   }
   return (
     <>

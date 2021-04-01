@@ -1,18 +1,22 @@
 import React from 'react'
-import { NavLink } from 'react-router-dom'
+import styled from 'styled-components'
 import LogoutButton from '../auth/LogoutButton'
+import NavListItem from './navListItem'
 
 export default function ProtectedRouteNavbar() {
   return (
-    <ul>
-      <li>
-        <NavLink to="/users" exact={true} activeClassName="active">
-          Users
-        </NavLink>
-      </li>
+    <Ul>
+      <NavListItem></NavListItem>
       <li>
         <LogoutButton />
       </li>
-    </ul>
+    </Ul>
   )
 }
+
+const Ul = styled.ul`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+`

@@ -1,7 +1,7 @@
-import { setAuthErrors } from './errors'
+import { setErrors } from './errors'
 
-const SET_USER = 'SET_USER'
-const LOGOUT_USER = 'LOGOUT_USER'
+const SET_USER = 'auth/setUser'
+const LOGOUT_USER = 'auth/logoutUser'
 
 export const logoutUser = () => ({ type: LOGOUT_USER })
 export const setUser = (user) => ({ type: SET_USER, user })
@@ -29,7 +29,7 @@ export const login = (email, password) => async (dispatch) => {
   })
   const user = await res.json()
   if (user.errors) {
-    dispatch(setAuthErrors(user.errors))
+    dispatch(setErrors(user.errors))
   } else {
     dispatch(setUser(user))
   }
@@ -58,7 +58,7 @@ export const signUp = (username, email, password) => async (dispatch) => {
   })
   const user = await res.json()
   if (user.errors) {
-    dispatch(setAuthErrors(user.errors))
+    dispatch(setErrors(user.errors))
   } else {
     dispatch(setUser(user))
   }

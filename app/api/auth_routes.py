@@ -7,15 +7,15 @@ from flask_login import current_user, login_user, logout_user, login_required
 auth_routes = Blueprint('auth', __name__)
 
 
-def validation_errors_to_error_messages(validation_errors):
-    """
-    Simple function that turns the WTForms validation errors into a simple list
-    """
-    errorMessages = []
-    for field in validation_errors:
-        for error in validation_errors[field]:
-            errorMessages.append(f"{field} : {error}")
-    return errorMessages
+# def validation_errors_to_error_messages(validation_errors):
+#     """
+#     Simple function that turns the WTForms validation errors into a simple list
+#     """
+#     errorMessages = []
+#     for field in validation_errors:
+#         for error in validation_errors[field]:
+#             errorMessages.append(f"{error}")
+#     return errorMessages
 
 
 @auth_routes.route('/')
@@ -25,7 +25,7 @@ def authenticate():
     """
     if current_user.is_authenticated:
         return current_user.to_dict()
-    return {'errors': ['Unauthorized']}, 401
+    return {'errors': { "auth": "unauthorized"}}, 401
 
 
 @auth_routes.route('/login', methods=['POST'])
@@ -43,7 +43,7 @@ def login():
         user = User.query.filter(User.email == form.data['email']).first()
         login_user(user)
         return user.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    return { 'errors': form.errors }, 401
 
 
 @auth_routes.route('/logout')
@@ -72,7 +72,7 @@ def sign_up():
         db.session.commit()
         login_user(user)
         return user.to_dict()
-    return {'errors': validation_errors_to_error_messages(form.errors)}
+    return {'errors': form.errors}, 400
 
 
 @auth_routes.route('/unauthorized')

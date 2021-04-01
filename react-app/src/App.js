@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import LoginForm from './components/auth/LoginForm'
-import SignUpForm from './components/auth/SignUpForm'
+import AuthFormGrid from './components/layout/authFormGrid'
 import NavBar from './components/navbar'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import UsersList from './components/UsersList'
@@ -20,7 +19,6 @@ function App() {
       setLoaded(true)
     })
   }, [dispatch])
-
   if (!loaded) {
     return null
   }
@@ -29,10 +27,10 @@ function App() {
     <BrowserRouter>
       <NavBar authenticated={authenticated} />
       <Route path="/login" exact={true}>
-        <LoginForm authenticated={authenticated} />
+        <AuthFormGrid authenticated={authenticated} form="Login" />
       </Route>
       <Route path="/sign-up" exact={true}>
-        <SignUpForm authenticated={authenticated} />
+        <AuthFormGrid authenticated={authenticated} form="Sign Up" />
       </Route>
       <ProtectedRoute path="/users" exact={true} authenticated={authenticated}>
         <UsersList />

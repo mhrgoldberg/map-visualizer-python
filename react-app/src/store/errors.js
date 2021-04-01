@@ -1,18 +1,21 @@
-const SET_AUTH_ERRORS = 'SET_AUTH_ERRORS'
+const SET_ERRORS = 'errors/setErrors'
+const CLEAR_ERRORS = 'errors/clearErrors'
 
-export const setAuthErrors = (errors) => ({ type: SET_AUTH_ERRORS, errors })
+export const setErrors = (errorsObj) => ({
+  type: SET_ERRORS,
+  payload: errorsObj
+})
+export const clearErrors = () => ({ type: CLEAR_ERRORS })
 
-const initState = {
-  auth: []
-}
+const initState = {}
 export function errorReducer(state = initState, action) {
   switch (action.type) {
-    case SET_AUTH_ERRORS: {
-      const newState = { ...state }
-      newState.auth = action.errors
-      return newState
+    case SET_ERRORS: {
+      return { ...action.payload }
     }
-
+    case CLEAR_ERRORS: {
+      return initState
+    }
     default:
       return state
   }

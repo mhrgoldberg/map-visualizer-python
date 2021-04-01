@@ -1,54 +1,76 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+import styled from 'styled-components'
 import { login } from '../../store/auth'
-import { useAuthErrors } from '../../hooks/errors'
+import { useErrors } from '../../hooks/errors'
 import { FormField } from '../utility'
 import ErrorsList from '../utility/errors'
 
 const LoginForm = ({ authenticated }) => {
   const dispatch = useDispatch()
-  const errors = useAuthErrors()
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+  const [errors, useClearErrorsOnUnmount] = useErrors()
+  useClearErrorsOnUnmount()
+
+  // Form State
+  const [form, setForm] = useState({
+    email: { value: '', updated: false },
+    password: { value: '', updated: false }
+  })
+
+  // Redux error handling
+  const updateField = (e) => {
+    const newState = { ...form }
+    const newField = newState[e.target.name]
+    if (!newField.updated) {
+      newField.updated = true
+    }
+    newField.value = e.target.value
+    setForm(newState)
+  }
 
   const onLogin = (e) => {
     e.preventDefault()
-    dispatch(login(email, password))
+    setForm({
+      email: { value: form.email.value, updated: false },
+      password: { value: '', updated: false }
+    })
+    dispatch(login(form.email.value, form.password.value))
   }
-
-  const updateEmail = (e) => {
-    setEmail(e.target.value)
-  }
-
-  const updatePassword = (e) => {
-    setPassword(e.target.value)
-  }
-
+  // render
   if (authenticated) {
     return <Redirect to="/" />
   }
 
   return (
-    <form onSubmit={onLogin}>
-      <ErrorsList errors={errors} />
+    <Form onSubmit={onLogin}>
       <FormField
         name="email"
         type="text"
         label="Email"
-        value={email}
-        onChange={updateEmail}
+        state={form.email}
+        placeholder={'example@example.com'}
+        onChange={updateField}
+        required={true}
+        error={errors?.password}
       />
       <FormField
         name="password"
         type="password"
         label="Password"
-        value={password}
-        onChange={updatePassword}
+        state={form.password}
+        onChange={updateField}
+        placeholder="Shh, secrets go here"
+        required={true}
+        error={errors?.password}
       />
       <button type="submit">Login</button>
-    </form>
+    </Form>
   )
 }
+
+const Form = styled.form`
+  height: fit-content;
+`
 
 export default LoginForm

@@ -1,7 +1,20 @@
-import { useSelector } from 'react-redux'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { clearErrors } from '../store/errors'
+export function useErrors() {
+  const dispatch = useDispatch()
 
-export function useAuthErrors() {
-  return useSelector((state) => {
-    return state.errors.auth
+  const errors = useSelector((state) => {
+    return state.errors
   })
+
+  const useClearErrorsOnUnmount = () => {
+    useEffect(() => {
+      return () => {
+        dispatch(clearErrors())
+      }
+    }, [])
+  }
+
+  return [errors, useClearErrorsOnUnmount]
 }

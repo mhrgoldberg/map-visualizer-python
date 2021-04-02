@@ -5,16 +5,16 @@ import NavListItem from './navListItem'
 
 export default function ProtectedRouteNavbar() {
   return (
-    <Ul>
+    <Nav>
       <NavListItem></NavListItem>
       <li>
         <LogoutButton />
       </li>
-    </Ul>
+    </Nav>
   )
 }
 
-const Ul = styled.ul`
+const Nav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;

@@ -8,7 +8,7 @@ import { setErrors } from '../../store/errors'
 import { FormField } from '../utility'
 import { useCurrentUser } from '../../hooks/user'
 
-const SignUpForm = () => {
+export default function SignUpForm() {
   const dispatch = useDispatch()
   const authenticated = !!useCurrentUser()
   // Redux error handling
@@ -106,5 +106,3 @@ const SignUpForm = () => {
 const Form = styled.form`
   height: fit-content;
 `
-
-export default SignUpForm

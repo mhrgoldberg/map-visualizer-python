@@ -2,12 +2,10 @@ import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
 import { useCurrentUser } from '../../hooks/user'
 
-const ProtectedRoute = (props) => {
+export default function ProtectedRoute(props) {
   const authenticated = !!useCurrentUser()
   if (!authenticated) {
-    return <Redirect to="/login" />
+    return <Redirect to="/" />
   }
   return <Route {...props} />
 }
-
-export default ProtectedRoute

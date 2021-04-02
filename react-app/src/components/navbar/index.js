@@ -35,6 +35,7 @@ const Header = styled.header`
     padding: 0 2rem;
     justify-items: space-between;
     align-content: center;
+    align-items: baseline;
     width: 90%;
     max-width: 120rem;
     height: 6rem;

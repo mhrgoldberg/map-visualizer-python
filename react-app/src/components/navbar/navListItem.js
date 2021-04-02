@@ -6,7 +6,7 @@ export default function NavListItem(props) {
 }
 
 const Li = styled.li`
-  display: flex;
+  /* display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: baseline; */
 `

@@ -7,9 +7,11 @@ export default function ProtectedRouteNavbar() {
   return (
     <Nav>
       <NavListItem></NavListItem>
-      <li>
-        <LogoutButton />
-      </li>
+      <ul>
+        <li>
+          <LogoutButton />
+        </li>
+      </ul>
     </Nav>
   )
 }

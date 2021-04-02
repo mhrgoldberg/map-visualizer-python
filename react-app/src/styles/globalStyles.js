@@ -27,6 +27,9 @@ export const GlobalStyles = createGlobalStyle`
     text-rendering: optimizeLegibility;
     line-height: 1.2;
   }
+  main {
+    margin: auto
+  }
   /* forms */
   form {
     min-width: 35rem;
@@ -46,6 +49,8 @@ export const GlobalStyles = createGlobalStyle`
   /* lists */
   ul {
     list-style: none;
+    margin: 0;
+    padding: 0;
   }
   /* Link */
   a {

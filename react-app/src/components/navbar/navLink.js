@@ -1,5 +1,4 @@
 import React from 'react'
-import styled from 'styled-components'
 import { NavLink } from 'react-router-dom'
 
 export default function NavLinkItem({ to, content }) {
@@ -9,9 +8,3 @@ export default function NavLinkItem({ to, content }) {
     </NavLink>
   )
 }
-
-const Li = styled.li`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`

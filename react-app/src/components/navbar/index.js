@@ -3,12 +3,14 @@ import styled from 'styled-components'
 import ProtectedRouteNavbar from './protectedRouteNavbar'
 import UnauthorizedRoutesNavbar from './unauthorizedRoutesNavbar'
 import { NavLink } from 'react-router-dom'
-export default function NavBar({ authenticated }) {
+import { useCurrentUser } from '../../hooks/user'
+export default function NavBar() {
+  const authenticated = !!useCurrentUser()
   return (
     <Header>
       <div className="navContainer">
         <NavLink to="/" exact={true} className="logo" activeClassName="active">
-          <h5 className="nav1">Home</h5>
+          <h5 className="nav1">MapVisualizer</h5>
         </NavLink>
         {authenticated ? (
           <ProtectedRouteNavbar />
@@ -28,11 +30,16 @@ const Header = styled.header`
   align-items: center;
   .navContainer {
     display: grid;
-    grid-template-columns: 10rem 1fr 20rem;
+    grid-template-columns: min-content 1fr minmax(15rem, min-content);
     grid-gap: 1rem;
-    place-items: center center;
-    width: 100%;
-    max-width: 150rem;
-    height: 5rem;
+    padding: 0 2rem;
+    justify-items: space-between;
+    align-content: center;
+    width: 90%;
+    max-width: 120rem;
+    height: 6rem;
+
+    /* font-size: 2rem;
+    line-height: 1; */
   }
 `

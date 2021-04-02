@@ -34,7 +34,7 @@ const FormDiv = styled.div`
   width: calc(100% - 2rem);
   display: grid;
   grid-template-rows: auto;
-  padding: 0.5rem 1rem;
+  /* padding: 0.5rem 1rem; */
   label {
     width: 100%;
     font-size: 2.2rem;

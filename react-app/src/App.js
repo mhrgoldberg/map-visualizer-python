@@ -7,6 +7,7 @@ import ProtectedRoute from './components/auth/ProtectedRoute'
 import UsersList from './components/UsersList'
 import User from './components/User'
 import { authenticate } from './store/auth'
+import SplashGrid from './components/layout/splashGrid'
 
 function App() {
   const dispatch = useDispatch()
@@ -14,6 +15,7 @@ function App() {
 
   useEffect(() => {
     dispatch(authenticate()).then(() => {
+      console.log('checked')
       setLoaded(true)
     })
   }, [dispatch])
@@ -46,9 +48,9 @@ function App() {
       <ProtectedRoute path="/workouts/id" exact={true}>
         <User />
       </ProtectedRoute>
-      <ProtectedRoute path="/" exact={true}>
-        <h1>My Home Page</h1>
-      </ProtectedRoute>
+      <Route path="/" exact={true}>
+        <SplashGrid />
+      </Route>
     </BrowserRouter>
   )
 }

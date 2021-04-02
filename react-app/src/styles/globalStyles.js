@@ -1,6 +1,10 @@
 import { createGlobalStyle } from 'styled-components'
 
 export const GlobalStyles = createGlobalStyle`
+  @-ms-viewport {
+  width: device-width;
+  }
+
   html {
     width: 100%;
     height: 100%;
@@ -25,10 +29,10 @@ export const GlobalStyles = createGlobalStyle`
   }
   /* forms */
   form {
-    min-width: 40rem;
-    max-width: 50rem;
-    width: 100%;
-    padding: 2rem;
+    min-width: 35rem;
+    max-width: 45rem;
+    width: 42rem;
+    padding: 4rem;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
@@ -70,15 +74,8 @@ export const GlobalStyles = createGlobalStyle`
     margin: 1rem;
     padding: 0.25em 1em;
     width:100%;
-    height: 4rem;  
-    /* transition: background 0.3s ease-in-out;    
-    transition: color 0.1s ease-in-out  ;     */
+    height: 4rem;
   }
-
-  /* button:focus {
-    border: none;
-    
-  } */
 
   button:hover {
     cursor: pointer;

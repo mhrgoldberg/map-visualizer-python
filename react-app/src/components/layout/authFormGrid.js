@@ -16,18 +16,18 @@ export default function AuthFormGrid({ form }) {
 }
 
 const Container = styled.div`
-  height: 100vh;
+  /* height: 90%; */
   display: grid;
   grid-gap: 1rem;
-  grid-template-columns: 1fr minmax(40rem, 1fr) 1fr;
   grid-template-rows: 10rem minmax(20rem, 1fr) 10rem;
   justify-items: center;
-  max-width: 150rem;
+  width: 100%;
+  max-width: 120rem;
   max-height: 100rem;
   min-height: 50rem;
   margin: auto;
   .header {
-    grid-column: 2;
+    grid-column: 1;
     grid-row: 1;
     display: flex;
     justify-content: center;
@@ -37,11 +37,11 @@ const Container = styled.div`
   }
 
   form {
-    grid-column: 2;
+    grid-column: 1;
     grid-row: 2;
     display: grid;
     grid-template-columns: 1fr;
-    grid-gap: 1rem;
+    grid-gap: 3rem;
     place-items: center center;
     div {
       display: flex;
@@ -54,6 +54,7 @@ const Container = styled.div`
       font-size: 2.2rem;
       font-weight: 500;
       width: calc(100% - 2rem);
+      /* margin-top: 3rem; */
     }
   }
 `

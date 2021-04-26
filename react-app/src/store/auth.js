@@ -7,7 +7,7 @@ export const logoutUser = () => ({ type: LOGOUT_USER })
 export const setUser = (user) => ({ type: SET_USER, user })
 
 export const authenticate = () => async (dispatch) => {
-  const res = await fetch('/api/auth/', {
+  const res = await fetch('/api/auth', {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -17,7 +17,7 @@ export const authenticate = () => async (dispatch) => {
 }
 
 export const login = (email, password) => async (dispatch) => {
-  const res = await fetch('/api/auth/login/', {
+  const res = await fetch('/api/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -36,7 +36,7 @@ export const login = (email, password) => async (dispatch) => {
 }
 
 export const logout = () => async (dispatch) => {
-  const res = await fetch('/api/auth/logout/', {
+  const res = await fetch('/api/auth/logout', {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -45,7 +45,7 @@ export const logout = () => async (dispatch) => {
 }
 
 export const signUp = (username, email, password) => async (dispatch) => {
-  const res = await fetch('/api/auth/signup/', {
+  const res = await fetch('/api/auth/signup', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

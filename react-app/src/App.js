@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import AuthFormGrid from './components/layout/authFormGrid'
+import AuthFormGrid from './components/auth/authFormGrid'
 import NavBar from './components/navbar'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import UsersList from './components/UsersList'
 import User from './components/User'
 import { authenticate } from './store/auth'
-import SplashGrid from './components/layout/splashGrid'
 
 function App() {
   const dispatch = useDispatch()
@@ -15,7 +14,6 @@ function App() {
 
   useEffect(() => {
     dispatch(authenticate()).then(() => {
-      console.log('checked')
       setLoaded(true)
     })
   }, [dispatch])
@@ -45,11 +43,11 @@ function App() {
       <ProtectedRoute path="/workouts" exact={true}>
         <User />
       </ProtectedRoute>
-      <ProtectedRoute path="/workouts/id" exact={true}>
+      <ProtectedRoute path="/workouts/:id" exact={true}>
         <User />
       </ProtectedRoute>
       <Route path="/" exact={true}>
-        <SplashGrid />
+        <AuthFormGrid form="Login" />
       </Route>
     </BrowserRouter>
   )

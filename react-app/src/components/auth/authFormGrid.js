@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import LoginForm from '../auth/LoginForm'
-import SignUpForm from '../auth/SignUpForm'
+import LoginForm from './LoginForm'
+import SignUpForm from './SignUpForm'
 
 export default function AuthFormGrid({ form }) {
   return (

@@ -6,19 +6,15 @@ import NavListItem from './navListItem'
 export default function ProtectedRouteNavbar() {
   return (
     <Nav>
-      <NavListItem></NavListItem>
-      <ul>
-        <li>
-          <LogoutButton />
-        </li>
-      </ul>
+      <span className="column3">
+        <LogoutButton />
+      </span>
     </Nav>
   )
 }
 
 const Nav = styled.nav`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+  /* width: 100%; */
+
+  grid-column: 3;
 `

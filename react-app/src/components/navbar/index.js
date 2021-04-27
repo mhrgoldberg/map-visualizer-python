@@ -25,7 +25,7 @@ export default function NavBar() {
 const Header = styled.header`
   width: 100%;
   display: flex;
-  border-bottom: 0.2rem solid ${({ theme }) => theme.secondary.dark};
+  border-bottom: 0.2rem solid var(--secondary-dark);
   justify-content: center;
   align-items: center;
   .navContainer {

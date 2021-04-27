@@ -9,7 +9,7 @@ export default function FormField({
   label,
   error,
   placeholder,
-  required = false
+  required = false,
 }) {
   if (!placeholder) placeholder = label
   return (
@@ -24,7 +24,6 @@ export default function FormField({
         placeholder={error && !state.updated ? error : placeholder}
         required={required}
       ></input>
-      {/* {error?.length && !state.updated && <p>{error}</p>} */}
     </FormDiv>
   )
 }
@@ -38,20 +37,20 @@ const FormDiv = styled.div`
   label {
     width: 100%;
     font-size: 2.2rem;
-    color: ${({ theme }) => theme.primary.light};
+    color: var(--primary-light);
   }
   /* errors */
   p {
-    color: ${({ theme }) => theme.primary.red};
+    color: var(--primary-alert);
     font-size: 1.2rem;
     margin: 0.8rem;
     padding: 0;
     line-height: 1;
   }
   .formFieldError {
-    border-bottom: 0.2rem solid ${({ theme }) => theme.primary.red} !important;
+    border-bottom: 0.2rem solid var(--primary-alert) !important;
     ::placeholder {
-      color: ${({ theme }) => theme.primary.red};
+      color: var(--primary-alert);
     }
   }
 
@@ -61,34 +60,19 @@ const FormDiv = styled.div`
     width: 100%;
     padding: 1rem 0.1rem;
     font-size: 1.8rem;
-    color: ${({ theme }) => theme.primary.light};
+    color: var(--primary-light);
     background: transparent;
     border: none;
-    border-bottom: 0.2rem solid ${({ theme }) => theme.primary.cyan};
+    border-bottom: 0.2rem solid var(--primary-cyan);
   }
 
   input::placeholder {
-    color: ${({ theme }) => theme.primary.gray};
+    color: var(--primary-gray);
   }
 
   input:focus {
     outline: none;
-    color: ${({ theme }) => theme.secondary.cyan};
-    border-bottom: 0.2rem solid ${({ theme }) => theme.secondary.cyan};
+    color: var(--secondary-cyan);
+    border-bottom: 0.2rem solid var(--secondary-cyan);
   }
-
-  /* input:-webkit-autofill,
-  input:-webkit-autofill:hover,
-  input:-webkit-autofill:focus,
-  textarea:-webkit-autofill,
-  textarea:-webkit-autofill:hover,
-  textarea:-webkit-autofill:focus,
-  select:-webkit-autofill,
-  select:-webkit-autofill:hover,
-  select:-webkit-autofill:focus {
-    .inputBgOpaque:-webkit-autofill {
-      box-shadow: 0 0 0 100px black inset;
-      -webkit-box-shadow: 0 0 0 100px black inset;
-    }
-  } */
 `

@@ -16,7 +16,6 @@ export default function AuthFormGrid({ form }) {
 }
 
 const Container = styled.div`
-  /* height: 90%; */
   display: grid;
   grid-gap: 1rem;
   grid-template-rows: 10rem minmax(20rem, 1fr) 10rem;
@@ -43,6 +42,8 @@ const Container = styled.div`
     grid-template-columns: 1fr;
     grid-gap: 3rem;
     place-items: center center;
+    width: 42rem;
+    background-color: var(--secondary-dark);
     div {
       display: flex;
       flex-direction: column;
@@ -54,7 +55,6 @@ const Container = styled.div`
       font-size: 2.2rem;
       font-weight: 500;
       width: calc(100% - 2rem);
-      /* margin-top: 3rem; */
     }
   }
 `

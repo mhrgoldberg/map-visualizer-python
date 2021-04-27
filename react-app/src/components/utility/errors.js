@@ -19,7 +19,7 @@ export default function ErrorsList({ errors }) {
 const Ul = styled.ul`
   font-size: 1.2rem;
   height: 1.2rem;
-  color: ${({ theme }) => theme.primary.red};
+  color: var(--primary-red);
   margin-left: 0;
   padding-left: 0;
 `

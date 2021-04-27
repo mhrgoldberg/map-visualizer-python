@@ -2,8 +2,13 @@ import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 import thunk from 'redux-thunk'
 import { authReducer } from './auth'
 import { errorReducer } from './errors'
+import { routesReducer } from './routes'
 
-const rootReducer = combineReducers({ auth: authReducer, errors: errorReducer })
+const rootReducer = combineReducers({
+  auth: authReducer,
+  routes: routesReducer,
+  errors: errorReducer,
+})
 
 let enhancer
 

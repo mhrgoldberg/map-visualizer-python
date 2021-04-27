@@ -1,9 +1,9 @@
-const SET_ERRORS = 'errors/setErrors'
-const CLEAR_ERRORS = 'errors/clearErrors'
+const SET_ERRORS = 'errors/SET_ERRORS'
+const CLEAR_ERRORS = 'errors/CLEAR_ERRORS'
 
 export const setErrors = (errorsObj) => ({
   type: SET_ERRORS,
-  payload: errorsObj
+  payload: errorsObj,
 })
 export const clearErrors = () => ({ type: CLEAR_ERRORS })
 

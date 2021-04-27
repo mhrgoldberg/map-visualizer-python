@@ -1,7 +1,7 @@
 import { setErrors } from './errors'
 
-const SET_USER = 'auth/setUser'
-const LOGOUT_USER = 'auth/logoutUser/'
+const SET_USER = 'auth/SET_USER'
+const LOGOUT_USER = 'auth/LOGOUT_USER'
 
 export const logoutUser = () => ({ type: LOGOUT_USER })
 export const setUser = (user) => ({ type: SET_USER, user })

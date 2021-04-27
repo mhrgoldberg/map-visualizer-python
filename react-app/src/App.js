@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
+
 import AuthFormGrid from './components/auth/authFormGrid'
-import NavBar from './components/navbar'
 import ProtectedRoute from './components/auth/ProtectedRoute'
+import NavBar from './components/navbar'
 import UsersList from './components/UsersList'
 import User from './components/User'
+import FileUpload from './components/file-upload'
 import { authenticate } from './store/auth'
 
 function App() {
@@ -31,6 +33,9 @@ function App() {
       <Route path="/sign-up" exact={true}>
         <AuthFormGrid form="Sign Up" />
       </Route>
+      <ProtectedRoute path="/upload" exact={true}>
+        <FileUpload />
+      </ProtectedRoute>
       <ProtectedRoute path="/dashboard" exact={true}>
         <UsersList />
       </ProtectedRoute>

@@ -1,26 +1,28 @@
-# Flask React Project
+# Map Visualizer
 
-This is the backend for the Flask React project.
+## Setup
 
-## Getting started
-
-1. Clone this repository (only this branch)
+1. Install dependencies
+   _IMPORTANT!_
+   If you add any python dependencies to your pipfiles, you'll need to regenerate your requirements.txt before deployment.
+   You can do this by running:
 
    ```bash
-   git clone https://github.com/appacademy-starters/python-project-starter.git
+   pipenv lock -r > requirements.txt
    ```
 
-2. Install dependencies
+   _OTHERWISE!_
 
-      ```bash
-      pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
-      ```
+   ```bash
+   pipenv install --dev -r dev-requirements.txt && pipenv install -r requirements.txt
+   ```
 
-3. Create a **.env** file based on the example with proper settings for your
+2. Create a **.env** file based on the example with proper settings for your
    development environment
-4. Setup your PostgreSQL user, password and database and make sure it matches your **.env** file
 
-5. Get into your pipenv, migrate your database, seed your database, and run your flask app
+3. Setup your PostgreSQL user, password and database and make sure it matches your **.env** file
+
+4. Get into your pipenv, migrate your database, seed your database, and run your flask app
 
    ```bash
    pipenv shell
@@ -38,21 +40,15 @@ This is the backend for the Flask React project.
    flask run
    ```
 
-6. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
+5. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
 
-***
-*IMPORTANT!*
-   If you add any python dependencies to your pipfiles, you'll need to regenerate your requirements.txt before deployment.
-   You can do this by running:
+---
 
-   ```bash
-   pipenv lock -r > requirements.txt
-   ```
+_ALSO IMPORTANT!_
+psycopg2-binary MUST remain a dev dependency because you can't install it on alpine-linux.
+There is a layer in the Dockerfile that will install psycopg2 (not binary) for us.
 
-*ALSO IMPORTANT!*
-   psycopg2-binary MUST remain a dev dependency because you can't install it on apline-linux.
-   There is a layer in the Dockerfile that will install psycopg2 (not binary) for us.
-***
+---
 
 ## Deploy to Heroku
 

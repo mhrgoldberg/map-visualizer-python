@@ -12,6 +12,7 @@ export default function SignUpForm() {
   const dispatch = useDispatch()
   const authenticated = !!useCurrentUser()
   const PRIMARY_SPORTS = ['Run', 'Hike', 'Cycle', 'MultiSport', 'Other']
+  const GENDERS = ['Male', 'Female', 'Other']
   // Redux error handling
   const [errors, useClearErrorsOnUnmount] = useErrors()
   useClearErrorsOnUnmount()
@@ -19,6 +20,8 @@ export default function SignUpForm() {
   const [form, setForm] = useState({
     email: { value: '', updated: false },
     username: { value: '', updated: false },
+    gender: { value: '', updated: false },
+    age: { value: '', updated: false },
     primarySport: { value: '', updated: false },
     password: { value: '', updated: false },
     repeatPassword: { value: '', updated: false },
@@ -39,7 +42,9 @@ export default function SignUpForm() {
     setForm({
       email: { value: form.email.value, updated: false },
       username: { value: form.username.value, updated: false },
-      primarySport: { value: '', updated: false },
+      gender: { value: form.gender.value, updated: false },
+      age: { value: form.age.value, updated: false },
+      primarySport: { value: form.primarySport.value, updated: false },
       password: { value: form.password.value, updated: false },
       repeatPassword: { value: form.repeatPassword.value, updated: false },
     })
@@ -48,6 +53,8 @@ export default function SignUpForm() {
         email: form.email.value,
         username: form.username.value,
         password: form.password.value,
+        age: form.age.value,
+        gender: form.gender.value,
         primary_sport: form.primarySport.value,
       }
       dispatch(signUp(data))
@@ -101,6 +108,25 @@ export default function SignUpForm() {
           state={form.repeatPassword}
           required={true}
           error={errors?.password}
+        />
+        <InputField
+          label="Age"
+          type="number"
+          name="age"
+          placeholder="it's just a number :D"
+          onChange={updateField}
+          state={form.age}
+          required={true}
+          error={errors?.age}
+        />
+        <SelectField
+          label="Gender"
+          options={GENDERS}
+          name="gender"
+          state={form.gender}
+          placeholder="Gender of preference"
+          onChange={updateField}
+          error={errors?.gender}
         />
         <SelectField
           label="Primary Sport"

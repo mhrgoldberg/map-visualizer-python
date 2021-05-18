@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import styled from 'styled-components'
 import { useErrors } from '../../hooks/errors'
 import { signUp } from '../../store/auth'
 import { setErrors } from '../../store/errors'
-import { FormField } from '../utility'
+import { InputField } from '../utility'
 import { useCurrentUser } from '../../hooks/user'
+import SelectField from '../utility/SelectField'
 
 export default function SignUpForm() {
   const dispatch = useDispatch()
   const authenticated = !!useCurrentUser()
+  const PRIMARY_SPORTS = ['Run', 'Hike', 'Cycle', 'MultiSport', 'Other']
   // Redux error handling
   const [errors, useClearErrorsOnUnmount] = useErrors()
   useClearErrorsOnUnmount()
@@ -18,11 +19,11 @@ export default function SignUpForm() {
   const [form, setForm] = useState({
     email: { value: '', updated: false },
     username: { value: '', updated: false },
+    primarySport: { value: '', updated: false },
     password: { value: '', updated: false },
-    repeatPassword: { value: '', updated: false }
+    repeatPassword: { value: '', updated: false },
   })
 
-  // Redux error handling
   const updateField = (e) => {
     const newState = { ...form }
     const newField = newState[e.target.name]
@@ -38,13 +39,18 @@ export default function SignUpForm() {
     setForm({
       email: { value: form.email.value, updated: false },
       username: { value: form.username.value, updated: false },
+      primarySport: { value: '', updated: false },
       password: { value: form.password.value, updated: false },
-      repeatPassword: { value: form.repeatPassword.value, updated: false }
+      repeatPassword: { value: form.repeatPassword.value, updated: false },
     })
     if (form.password.value === form.repeatPassword.value) {
-      dispatch(
-        signUp(form.username.value, form.email.value, form.password.value)
-      )
+      const data = {
+        email: form.email.value,
+        username: form.username.value,
+        password: form.password.value,
+        primary_sport: form.primarySport.value,
+      }
+      dispatch(signUp(data))
     } else {
       dispatch(setErrors({ password: 'Password fields do not match.' }))
     }
@@ -55,9 +61,8 @@ export default function SignUpForm() {
   }
   return (
     <>
-      <Form onSubmit={onSignUp}>
-        {/* <ErrorsList errors={errors} /> */}
-        <FormField
+      <form onSubmit={onSignUp}>
+        <InputField
           label="User Name"
           type="text"
           name="username"
@@ -67,7 +72,7 @@ export default function SignUpForm() {
           placeholder="letters, numbers, no space"
           error={errors?.username}
         />
-        <FormField
+        <InputField
           label="Email"
           type="text"
           name="email"
@@ -77,17 +82,17 @@ export default function SignUpForm() {
           required={true}
           error={errors?.email}
         />
-        <FormField
+        <InputField
           label="Password"
           type="password"
           name="password"
-          onChange={updateField}
           placeholder="Shh, secrets go here"
+          onChange={updateField}
           state={form.password}
           required={true}
           error={errors?.password}
         />
-        <FormField
+        <InputField
           label="Confirm Password"
           type="password"
           name="repeatPassword"
@@ -97,12 +102,17 @@ export default function SignUpForm() {
           required={true}
           error={errors?.password}
         />
+        <SelectField
+          label="Primary Sport"
+          options={PRIMARY_SPORTS}
+          name="primarySport"
+          state={form.primarySport}
+          placeholder="How do you like to play?"
+          onChange={updateField}
+          error={errors?.primary_sport}
+        />
         <button type="submit">Sign Up</button>
-      </Form>
+      </form>
     </>
   )
 }
-
-const Form = styled.form`
-  height: fit-content;
-`

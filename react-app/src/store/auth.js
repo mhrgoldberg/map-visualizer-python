@@ -44,17 +44,13 @@ export const logout = () => async (dispatch) => {
   if (res.ok) dispatch(logoutUser())
 }
 
-export const signUp = (username, email, password) => async (dispatch) => {
+export const signUp = (data) => async (dispatch) => {
   const res = await fetch('/api/auth/signup', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      username,
-      email,
-      password,
-    }),
+    body: JSON.stringify(data),
   })
   const user = await res.json()
   if (user.errors) {

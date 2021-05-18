@@ -16,18 +16,21 @@ export default function AuthFormGrid({ form }) {
 }
 
 const Container = styled.div`
+  /* layout (Container Grid)*/
   display: grid;
   grid-gap: 1rem;
   grid-template-rows: 10rem minmax(20rem, 1fr) 10rem;
   justify-items: center;
   width: 100%;
   max-width: 120rem;
-  max-height: 100rem;
   min-height: 50rem;
   margin: auto;
+
   .header {
+    /* container grid placement */
     grid-column: 1;
     grid-row: 1;
+    /* layout */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -36,25 +39,25 @@ const Container = styled.div`
   }
 
   form {
+    /* layout (Form Grid)*/
+    display: grid;
     grid-column: 1;
     grid-row: 2;
-    display: grid;
     grid-template-columns: 1fr;
     grid-gap: 3rem;
     place-items: center center;
     width: 42rem;
+    padding: 4rem;
+    /* style */
     background-color: var(--secondary-dark);
-    div {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      height: fit-content;
-    }
+    border-radius: 1rem;
 
     button {
+      /* layout */
+      width: calc(100% - 2rem);
+      /* typography */
       font-size: 2.2rem;
       font-weight: 500;
-      width: calc(100% - 2rem);
     }
   }
 `

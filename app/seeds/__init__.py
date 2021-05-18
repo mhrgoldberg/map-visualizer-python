@@ -6,13 +6,23 @@ from .users import seed_users, undo_users
 seed_commands = AppGroup('seed')
 
 # Creates the `flask seed all` command
+
+
 @seed_commands.command('all')
 def seed():
+    """
+    Seeds all users
+    """
     seed_users()
     # Add other seed functions here
 
 # Creates the `flask seed undo` command
+
+
 @seed_commands.command('undo')
 def undo():
+    """
+    Turncates users table
+    """
     undo_users()
     # Add other undo functions here

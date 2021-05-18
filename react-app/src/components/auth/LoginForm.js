@@ -1,10 +1,9 @@
 import React, { useState } from 'react'
 import { Redirect } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import styled from 'styled-components'
 import { login } from '../../store/auth'
 import { useErrors } from '../../hooks/errors'
-import { FormField } from '../utility'
+import { InputField } from '../utility'
 import { useCurrentUser } from '../../hooks/user'
 
 export default function LoginForm() {
@@ -16,7 +15,7 @@ export default function LoginForm() {
   // Form State
   const [form, setForm] = useState({
     email: { value: '', updated: false },
-    password: { value: '', updated: false }
+    password: { value: '', updated: false },
   })
 
   // Redux error handling
@@ -34,7 +33,7 @@ export default function LoginForm() {
     e.preventDefault()
     setForm({
       email: { value: form.email.value, updated: false },
-      password: { value: form.password.value, updated: false }
+      password: { value: form.password.value, updated: false },
     })
     dispatch(login(form.email.value, form.password.value))
   }
@@ -44,8 +43,8 @@ export default function LoginForm() {
   }
 
   return (
-    <Form onSubmit={onLogin}>
-      <FormField
+    <form onSubmit={onLogin}>
+      <InputField
         name="email"
         type="text"
         label="Email"
@@ -55,7 +54,7 @@ export default function LoginForm() {
         required={true}
         error={errors?.password}
       />
-      <FormField
+      <InputField
         name="password"
         type="password"
         label="Password"
@@ -66,10 +65,6 @@ export default function LoginForm() {
         error={errors?.password}
       />
       <button type="submit">Login</button>
-    </Form>
+    </form>
   )
 }
-
-const Form = styled.form`
-  height: fit-content;
-`

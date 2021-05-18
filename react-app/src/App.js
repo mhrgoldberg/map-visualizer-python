@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
-import AuthFormGrid from './components/auth/authFormGrid'
+import AuthFormGrid from './components/auth/AuthFormGrid'
 import ProtectedRoute from './components/auth/ProtectedRoute'
-import NavBar from './components/navbar'
-import UsersList from './components/UsersList'
-import User from './components/User'
-import FileUpload from './components/file-upload'
+import NavBar from './components/Navbar'
+import UsersList from './components/Profile/UsersList'
+import User from './components/Profile/User'
+import { FileUpload } from './components/utility'
 import { authenticate } from './store/auth'
 
 function App() {

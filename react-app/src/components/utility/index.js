@@ -1,3 +1,5 @@
-import FormField from './formField'
+import InputField from './InputField'
+import ErrorsList from './ErrorsList'
+import FileUpload from './FileUpload'
 
-export { FormField }
+export { InputField, ErrorsList, FileUpload }

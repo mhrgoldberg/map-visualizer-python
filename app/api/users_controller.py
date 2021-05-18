@@ -8,12 +8,12 @@ users_controller = Blueprint('users', __name__)
 @users_controller.route('/')
 @login_required
 def users():
-	users = User.query.all()
-	return {"users": [user.to_dict() for user in users]}
+    users = User.query.all()
+    return {"users": [user.to_dict() for user in users]}
 
 
 @users_controller.route('/<int:id>')
 @login_required
 def user(id):
-	user = User.query.get(id)
-	return user.to_dict()
+    user = User.query.get(id)
+    return user.to_dict()

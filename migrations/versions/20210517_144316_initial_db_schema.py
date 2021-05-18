@@ -1,8 +1,8 @@
-"""create initial tables
+"""initial db schema
 
-Revision ID: 002944036413
+Revision ID: fd0a6411cfc6
 Revises: 
-Create Date: 2021-05-05 20:51:17.926606
+Create Date: 2021-05-17 14:43:16.032380
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '002944036413'
+revision = 'fd0a6411cfc6'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -23,7 +23,9 @@ def upgrade():
     sa.Column('username', sa.String(length=40), nullable=False),
     sa.Column('email', sa.String(length=255), nullable=False),
     sa.Column('hashed_password', sa.String(length=255), nullable=False),
-    sa.Column('primary_sport', sa.Enum('Cycle', 'Run', 'Hike', 'MultiSport', 'Other', name='primarysport'), nullable=False),
+    sa.Column('gender', sa.Enum('Male', 'Female', 'Other', name='genderoptions'), nullable=True),
+    sa.Column('age', sa.Integer(), nullable=True),
+    sa.Column('primary_sport', sa.Enum('Cycle', 'Run', 'Hike', 'MultiSport', 'Other', name='primarysportoptions'), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
     sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('now()'), nullable=True),
     sa.PrimaryKeyConstraint('id'),

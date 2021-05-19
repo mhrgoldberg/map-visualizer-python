@@ -80,8 +80,8 @@ export const GlobalStyles = createGlobalStyle`
 	/* Form input */
 	select, input {
 		/* layout */
-		width: 100%;
-		padding: 1rem 0.1rem;
+		/* width: 100%; */
+		padding: 1rem 0.5rem;
 		/* typography */
 		font-size: 1.8rem;
 		/* style */
@@ -175,5 +175,12 @@ export const GlobalStyles = createGlobalStyle`
 		color: var(--primary-light);
 		font-size: 1.0rem;
 		margin: .2rem;
+	}
+
+	/* Media Queries */
+	@media only screen and (max-width: 550px) {
+    html {
+      font-size: 45%;
+    }
 	}
 	`

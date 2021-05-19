@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
-import AuthFormGrid from './components/auth/AuthFormGrid'
-import ProtectedRoute from './components/auth/ProtectedRoute'
+import { AuthFormGrid, ProtectedRoute } from './components/AuthFormGrid'
 import NavBar from './components/Navbar'
 import UsersList from './components/Profile/UsersList'
 import User from './components/Profile/User'
@@ -49,7 +48,7 @@ function App() {
         <User />
       </ProtectedRoute>
       <ProtectedRoute path="/workouts/:id" exact={true}>
-        <User />
+        <UsersList />
       </ProtectedRoute>
       <Route path="/" exact={true}>
         <AuthFormGrid form="Login" />

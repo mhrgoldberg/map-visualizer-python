@@ -4,19 +4,14 @@ import styled from 'styled-components'
 export default function Dashboard() {
   return (
     <Grid>
-      <div></div>
+      <aside></aside>
     </Grid>
   )
 }
 
 const Grid = styled.div`
   width: 100vw;
-  margin: auto;
-  div {
-    max-width: 120rem;
-    width: 90%;
-    display: grid;
-    grid-template-columns: 200px, 1fr;
-    /* grid-template-rows: 200px, 1fr; */
-  }
+  min-height: calc(100vh - 6rem);
+  display: grid;
+  grid-template-columns: 20rem, 1fr;
 `

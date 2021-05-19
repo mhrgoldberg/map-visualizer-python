@@ -2,8 +2,9 @@ import React from 'react'
 import styled from 'styled-components'
 import LoginForm from './LoginForm'
 import SignUpForm from './SignUpForm'
+import ProtectedRoute from './ProtectedRoute'
 
-export default function AuthFormGrid({ form }) {
+function AuthFormGrid({ form }) {
   return (
     <Container>
       <div className="header">
@@ -44,9 +45,9 @@ const Container = styled.div`
     grid-column: 1;
     grid-row: 2;
     grid-template-columns: 1fr;
-    grid-gap: 3rem;
+    grid-gap: 2rem;
     place-items: center center;
-    width: 42rem;
+    width: 40rem;
     padding: 4rem;
     /* style */
     background-color: var(--secondary-dark);
@@ -61,3 +62,4 @@ const Container = styled.div`
     }
   }
 `
+export { AuthFormGrid, ProtectedRoute }

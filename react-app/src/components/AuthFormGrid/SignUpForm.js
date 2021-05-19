@@ -11,8 +11,11 @@ import SelectField from '../utility/SelectField'
 export default function SignUpForm() {
   const dispatch = useDispatch()
   const authenticated = !!useCurrentUser()
+
+  // Select Field Options (must match ENUMs in User Model)
   const PRIMARY_SPORTS = ['Run', 'Hike', 'Cycle', 'MultiSport', 'Other']
   const GENDERS = ['Male', 'Female', 'Other']
+
   // Redux error handling
   const [errors, useClearErrorsOnUnmount] = useErrors()
   useClearErrorsOnUnmount()

@@ -117,6 +117,8 @@ export default function SignUpForm() {
           type="number"
           name="age"
           placeholder="it's just a number :D"
+          min="12"
+          max="130"
           onChange={updateField}
           state={form.age}
           required={true}

@@ -46,20 +46,20 @@ const defaultState = {
 }
 
 export function routesReducer(state = defaultState, action) {
+  const newState = { ...state }
   switch (action.type) {
     case SET_ROUTE: {
-      const newState = { ...state }
+      newState.userRoutes[action.payload.id] = action.payload.userRoutes
       return newState
     }
     case ADD_TO_USER_ROUTES: {
-      const newState = { ...state }
       newState.userRoutes = {
         ...state.userRoutes,
         [action.payload.id]: action.payload,
       }
+      return newState
     }
     case RESET_USER_ROUTES: {
-      const newState = { ...state }
       newState.userRoutes = {}
       return newState
     }

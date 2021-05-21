@@ -30,15 +30,15 @@ const Header = styled.header`
   align-items: center;
   .navContainer {
     display: grid;
-    grid-template-columns: min-content 1fr minmax(15rem, min-content);
+    grid-template-columns: min-content 1fr min-content;
     grid-gap: 1rem;
     padding: 0 2rem;
     justify-items: space-between;
     align-content: center;
-    align-items: baseline;
+    align-items: center;
     width: 90%;
     max-width: 120rem;
-    height: 6rem;
+    height: 7rem;
 
     /* font-size: 2rem;
     line-height: 1; */

@@ -6,7 +6,7 @@ import { AuthFormGrid, ProtectedRoute } from './components/AuthFormGrid'
 import NavBar from './components/Navbar'
 import UsersList from './components/Profile/UsersList'
 import User from './components/Profile/User'
-import { FileUpload } from './components/utility'
+import FileUpload from './components/new/FileUpload'
 import { authenticate } from './store/auth'
 
 function App() {
@@ -32,9 +32,6 @@ function App() {
       <Route path="/sign-up" exact={true}>
         <AuthFormGrid form="Sign Up" />
       </Route>
-      <ProtectedRoute path="/upload" exact={true}>
-        <FileUpload />
-      </ProtectedRoute>
       <ProtectedRoute path="/dashboard" exact={true}>
         <UsersList />
       </ProtectedRoute>
@@ -43,6 +40,9 @@ function App() {
       </ProtectedRoute>
       <ProtectedRoute path="/routes/:id" exact={true}>
         <User />
+      </ProtectedRoute>
+      <ProtectedRoute path="/new" exact={true}>
+        <FileUpload />
       </ProtectedRoute>
       <ProtectedRoute path="/workouts" exact={true}>
         <User />

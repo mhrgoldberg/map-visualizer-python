@@ -1,24 +1,17 @@
 import React from 'react'
 import styled from 'styled-components'
-import { NavLink, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
+import NavLinkItem from './NavLinkItem'
 
 export default function UnauthorizedRoutesNavbar() {
   const location = useLocation()
   return (
     <Nav>
       {location.pathname !== '/login' && (
-        <span className="nav3">
-          <NavLink to="/login" exact={true} activeClassName="active">
-            Login
-          </NavLink>
-        </span>
+        <NavLinkItem to="/login">Login</NavLinkItem>
       )}
       {location.pathname !== '/sign-up' && (
-        <span className="nav3">
-          <NavLink to="/sign-up" exact={true} activeClassName="active">
-            Sign Up
-          </NavLink>
-        </span>
+        <NavLinkItem to="/sign-up">Sign Up</NavLinkItem>
       )}
     </Nav>
   )
@@ -27,6 +20,7 @@ export default function UnauthorizedRoutesNavbar() {
 const Nav = styled.nav`
   grid-column: 3;
   display: flex;
+  width: 12rem;
   align-items: center;
   justify-content: space-between;
   flex-direction: row-reverse;

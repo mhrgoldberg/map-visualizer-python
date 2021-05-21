@@ -1,5 +1,5 @@
 import InputField from './InputField'
 import ErrorsList from './ErrorsList'
-import FileUpload from './FileUpload'
+import AddButton from './AddButton'
 
-export { InputField, ErrorsList, FileUpload }
+export { InputField, ErrorsList, AddButton }

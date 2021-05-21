@@ -14,5 +14,12 @@ export default function LogOutButton() {
 
 const LogoutButton = styled.button`
   font-size: 1.6rem;
-  grid-column: 3;
+  /* width: 50%; */
+  /* grid-column: 3; */
+  color: var(--primary-light);
+  border-color: var(--primary-light);
+
+  :hover {
+    border-color: var(--primary-cyan);
+  }
 `

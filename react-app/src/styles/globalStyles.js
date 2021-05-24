@@ -69,7 +69,12 @@ export const GlobalStyles = createGlobalStyle`
     border-bottom: 0.2rem solid transparent;
   }
   a:hover {
-    border-bottom: 0.2rem solid var(--primary-cyan)
+    border-bottom: 0.2rem solid var(--primary-pink);
+    color: var(--primary-cyan);
+  }
+  
+  .transparent_underline {
+    :hover {border-bottom: 0.2rem solid transparent;}
   }
 
   /* Text */
@@ -79,6 +84,26 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   /* Form input */
+  form {
+    /* layout (Form Grid)*/
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 2rem;
+    place-items: center center;
+    width: 40rem;
+    padding: 4rem;
+    /* style */
+    background-color: var(--secondary-dark);
+    border-radius: 1rem;
+
+    button {
+      /* layout */
+      width: calc(100% - 2rem);
+      /* typography */
+      font-size: 2.2rem;
+      font-weight: 500;
+    }
+  }
   select, input {
     /* layout */
     /* width: 100%; */
@@ -189,6 +214,7 @@ export const GlobalStyles = createGlobalStyle`
     font-size: 1.0rem;
     margin: .2rem;
   }
+
 
   /* Media Queries */
   @media only screen and (max-width: 550px) {

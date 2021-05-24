@@ -4,7 +4,7 @@ import styled from 'styled-components'
 export default function Dashboard() {
   return (
     <Grid>
-      <aside></aside>
+      <aside>Hello</aside>
     </Grid>
   )
 }

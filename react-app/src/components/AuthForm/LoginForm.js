@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { login } from '../../store/auth'
 import { useErrors } from '../../hooks/errors'
-import { InputField } from '../utility'
+import { FormUtility } from '../utility'
 import { useCurrentUser } from '../../hooks/user'
 
 export default function LoginForm() {
@@ -18,16 +18,7 @@ export default function LoginForm() {
     password: { value: '', updated: false },
   })
 
-  // Redux error handling
-  const updateField = (e) => {
-    const newState = { ...form }
-    const newField = newState[e.target.name]
-    if (!newField.updated) {
-      newField.updated = true
-    }
-    newField.value = e.target.value
-    setForm(newState)
-  }
+  const updateField = FormUtility.updateFieldGenerator(form, setForm)
 
   const onLogin = (e) => {
     e.preventDefault()
@@ -44,7 +35,7 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={onLogin}>
-      <InputField
+      <FormUtility.InputField
         name="email"
         type="text"
         label="Email"
@@ -54,7 +45,7 @@ export default function LoginForm() {
         required={true}
         error={errors?.password}
       />
-      <InputField
+      <FormUtility.InputField
         name="password"
         type="password"
         label="Password"

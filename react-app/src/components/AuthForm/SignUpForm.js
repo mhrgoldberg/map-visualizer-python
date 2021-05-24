@@ -4,9 +4,8 @@ import { Redirect } from 'react-router-dom'
 import { useErrors } from '../../hooks/errors'
 import { signUp } from '../../store/auth'
 import { setErrors } from '../../store/errors'
-import { InputField } from '../utility'
+import { FormUtility } from '../utility'
 import { useCurrentUser } from '../../hooks/user'
-import SelectField from '../utility/SelectField'
 
 export default function SignUpForm() {
   const dispatch = useDispatch()
@@ -29,16 +28,7 @@ export default function SignUpForm() {
     password: { value: '', updated: false },
     repeatPassword: { value: '', updated: false },
   })
-
-  const updateField = (e) => {
-    const newState = { ...form }
-    const newField = newState[e.target.name]
-    if (!newField.updated) {
-      newField.updated = true
-    }
-    newField.value = e.target.value
-    setForm(newState)
-  }
+  const updateField = FormUtility.updateFieldGenerator(form, setForm)
 
   const onSignUp = async (e) => {
     e.preventDefault()
@@ -72,7 +62,7 @@ export default function SignUpForm() {
   return (
     <>
       <form onSubmit={onSignUp}>
-        <InputField
+        <FormUtility.InputField
           label="User Name"
           type="text"
           name="username"
@@ -82,7 +72,7 @@ export default function SignUpForm() {
           placeholder="letters, numbers, no space"
           error={errors?.username}
         />
-        <InputField
+        <FormUtility.InputField
           label="Email"
           type="text"
           name="email"
@@ -92,7 +82,7 @@ export default function SignUpForm() {
           required={true}
           error={errors?.email}
         />
-        <InputField
+        <FormUtility.InputField
           label="Password"
           type="password"
           name="password"
@@ -102,7 +92,7 @@ export default function SignUpForm() {
           required={true}
           error={errors?.password}
         />
-        <InputField
+        <FormUtility.InputField
           label="Confirm Password"
           type="password"
           name="repeatPassword"
@@ -112,7 +102,7 @@ export default function SignUpForm() {
           required={true}
           error={errors?.password}
         />
-        <InputField
+        <FormUtility.InputField
           label="Age"
           type="number"
           name="age"
@@ -124,7 +114,7 @@ export default function SignUpForm() {
           required={true}
           error={errors?.age}
         />
-        <SelectField
+        <FormUtility.SelectField
           label="Gender"
           options={GENDERS}
           name="gender"
@@ -133,7 +123,7 @@ export default function SignUpForm() {
           onChange={updateField}
           error={errors?.gender}
         />
-        <SelectField
+        <FormUtility.SelectField
           label="Primary Sport"
           options={PRIMARY_SPORTS}
           name="primarySport"

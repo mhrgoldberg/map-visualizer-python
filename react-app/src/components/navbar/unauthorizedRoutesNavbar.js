@@ -4,15 +4,14 @@ import { useLocation } from 'react-router-dom'
 import NavLinkItem from './NavLinkItem'
 
 export default function UnauthorizedRoutesNavbar() {
-  const location = useLocation()
+  const path = useLocation().pathname
+  console.log(path)
   return (
     <Nav>
-      {location.pathname !== '/login' && (
+      {path !== '/login' && path !== '/' && (
         <NavLinkItem to="/login">Login</NavLinkItem>
       )}
-      {location.pathname !== '/sign-up' && (
-        <NavLinkItem to="/sign-up">Sign Up</NavLinkItem>
-      )}
+      {path !== '/sign-up' && <NavLinkItem to="/sign-up">Sign Up</NavLinkItem>}
     </Nav>
   )
 }

@@ -1,13 +1,12 @@
 import React from 'react'
 import styled from 'styled-components'
-import LogoutButton from '../AuthFormGrid/LogoutButton'
-import { AddButton } from '../utility'
+import { AddButton, LogoutButton } from '../utility'
 import NavLinkItem from './NavLinkItem'
 
 export default function ProtectedRouteNavbar() {
   return (
     <Nav className="column3">
-      <NavLinkItem to="/new">
+      <NavLinkItem to="/new" transparent={true}>
         <AddButton />
       </NavLinkItem>
       <LogoutButton />
@@ -21,7 +20,4 @@ const Nav = styled.nav`
   justify-content: center;
   align-items: center;
   grid-column: 3;
-  a:hover {
-    border-bottom: 0.2rem solid transparent;
-  }
 `

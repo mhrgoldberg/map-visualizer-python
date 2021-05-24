@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
-import { AuthFormGrid, ProtectedRoute } from './components/AuthFormGrid'
+import { AuthForm, ProtectedRoute } from './components/AuthForm'
 import NavBar from './components/Navbar'
 import UsersList from './components/Profile/UsersList'
 import User from './components/Profile/User'
-import FileUpload from './components/new/FileUpload'
+import FileUpload from './components/NewForm/FileUpload'
 import { authenticate } from './store/auth'
+import Dashboard from './components/Dashboard'
 
 function App() {
   const dispatch = useDispatch()
@@ -27,22 +28,22 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Route path="/login" exact={true}>
-        <AuthFormGrid form="Login" />
+        <AuthForm form="Login" />
       </Route>
       <Route path="/sign-up" exact={true}>
-        <AuthFormGrid form="Sign Up" />
+        <AuthForm form="Sign Up" />
       </Route>
       <ProtectedRoute path="/dashboard" exact={true}>
-        <UsersList />
+        <Dashboard />
+      </ProtectedRoute>
+      <ProtectedRoute path="/new" exact={true}>
+        <FileUpload />
       </ProtectedRoute>
       <ProtectedRoute path="/routes" exact={true}>
         <UsersList />
       </ProtectedRoute>
       <ProtectedRoute path="/routes/:id" exact={true}>
         <User />
-      </ProtectedRoute>
-      <ProtectedRoute path="/new" exact={true}>
-        <FileUpload />
       </ProtectedRoute>
       <ProtectedRoute path="/workouts" exact={true}>
         <User />
@@ -51,7 +52,7 @@ function App() {
         <UsersList />
       </ProtectedRoute>
       <Route path="/" exact={true}>
-        <AuthFormGrid form="Login" />
+        <AuthForm form="Login" />
       </Route>
     </BrowserRouter>
   )

@@ -2,16 +2,21 @@ import React from 'react'
 import styled from 'styled-components'
 import ProtectedRouteNavbar from './protectedRouteNavbar'
 import UnauthorizedRoutesNavbar from './unauthorizedRoutesNavbar'
-import { NavLink } from 'react-router-dom'
+import NavLinkItem from './NavLinkItem'
 import { useCurrentUser } from '../../hooks/user'
+import Logo from '../utility/Logo'
+
 export default function NavBar() {
   const authenticated = !!useCurrentUser()
   return (
     <Header>
       <div className="navContainer">
-        <NavLink to="/" exact={true} className="logo" activeClassName="active">
-          <h5 className="nav1">MapVisualizer</h5>
-        </NavLink>
+        <NavLinkItem to="/" transparent={true}>
+          <span>
+            <Logo />
+            <h5>MapVisualizer</h5>
+          </span>
+        </NavLinkItem>
         {authenticated ? (
           <ProtectedRouteNavbar />
         ) : (
@@ -24,10 +29,28 @@ export default function NavBar() {
 
 const Header = styled.header`
   width: 100%;
+  height: 7rem;
   display: flex;
+  /* background-color: var(--secondary-dark); */
   border-bottom: 0.2rem solid var(--secondary-dark);
   justify-content: center;
   align-items: center;
+  a:hover {
+    h5 {
+      color: var(--primary-cyan);
+    }
+  }
+
+  h5 {
+    margin: 0;
+  }
+
+  span {
+    grid-column: 1;
+    display: flex;
+    align-items: center;
+    width: 23rem;
+  }
   .navContainer {
     display: grid;
     grid-template-columns: min-content 1fr min-content;
@@ -39,8 +62,5 @@ const Header = styled.header`
     width: 90%;
     max-width: 120rem;
     height: 7rem;
-
-    /* font-size: 2rem;
-    line-height: 1; */
   }
 `

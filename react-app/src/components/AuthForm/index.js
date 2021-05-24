@@ -4,7 +4,7 @@ import LoginForm from './LoginForm'
 import SignUpForm from './SignUpForm'
 import ProtectedRoute from './ProtectedRoute'
 
-function AuthFormGrid({ form }) {
+function AuthForm({ form }) {
   return (
     <Container>
       <div className="header">
@@ -41,25 +41,8 @@ const Container = styled.div`
 
   form {
     /* layout (Form Grid)*/
-    display: grid;
     grid-column: 1;
     grid-row: 2;
-    grid-template-columns: 1fr;
-    grid-gap: 2rem;
-    place-items: center center;
-    width: 40rem;
-    padding: 4rem;
-    /* style */
-    background-color: var(--secondary-dark);
-    border-radius: 1rem;
-
-    button {
-      /* layout */
-      width: calc(100% - 2rem);
-      /* typography */
-      font-size: 2.2rem;
-      font-weight: 500;
-    }
   }
 `
-export { AuthFormGrid, ProtectedRoute }
+export { AuthForm, ProtectedRoute }

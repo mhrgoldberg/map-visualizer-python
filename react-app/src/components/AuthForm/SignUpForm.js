@@ -1,56 +1,32 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
-import { useErrors } from '../../hooks/errors'
 import { signUp } from '../../store/auth'
 import { setErrors } from '../../store/errors'
-import { FormUtility } from '../utility'
-import { useCurrentUser } from '../../hooks/user'
+import { forms, useCurrentUser, useErrors, useFormState } from '../utility'
 
 export default function SignUpForm() {
   const dispatch = useDispatch()
   const authenticated = !!useCurrentUser()
-
-  // Select Field Options (must match ENUMs in User Model)
-  const PRIMARY_SPORTS = ['Run', 'Hike', 'Cycle', 'MultiSport', 'Other']
-  const GENDERS = ['Male', 'Female', 'Other']
-
+  const [form, { updateField, setUpdatedStatusFalse, formatSubmit }] =
+    useFormState({
+      email: '',
+      username: '',
+      gender: '',
+      age: '',
+      primary_sport: '',
+      password: '',
+      repeat_password: '',
+    })
   // Redux error handling
   const [errors, useClearErrorsOnUnmount] = useErrors()
   useClearErrorsOnUnmount()
-  // Form State
-  const [form, setForm] = useState({
-    email: { value: '', updated: false },
-    username: { value: '', updated: false },
-    gender: { value: '', updated: false },
-    age: { value: '', updated: false },
-    primarySport: { value: '', updated: false },
-    password: { value: '', updated: false },
-    repeatPassword: { value: '', updated: false },
-  })
-  const updateField = FormUtility.updateFieldGenerator(form, setForm)
 
   const onSignUp = async (e) => {
     e.preventDefault()
-    setForm({
-      email: { value: form.email.value, updated: false },
-      username: { value: form.username.value, updated: false },
-      gender: { value: form.gender.value, updated: false },
-      age: { value: form.age.value, updated: false },
-      primarySport: { value: form.primarySport.value, updated: false },
-      password: { value: form.password.value, updated: false },
-      repeatPassword: { value: form.repeatPassword.value, updated: false },
-    })
-    if (form.password.value === form.repeatPassword.value) {
-      const data = {
-        email: form.email.value,
-        username: form.username.value,
-        password: form.password.value,
-        age: form.age.value,
-        gender: form.gender.value,
-        primary_sport: form.primarySport.value,
-      }
-      dispatch(signUp(data))
+    setUpdatedStatusFalse()
+    if (form.password.value === form.repeat_password.value) {
+      dispatch(signUp(formatSubmit()))
     } else {
       dispatch(setErrors({ password: 'Password fields do not match.' }))
     }
@@ -59,10 +35,11 @@ export default function SignUpForm() {
   if (authenticated) {
     return <Redirect to="/dashboard" />
   }
+
   return (
     <>
       <form onSubmit={onSignUp}>
-        <FormUtility.InputField
+        <forms.InputField
           label="User Name"
           type="text"
           name="username"
@@ -72,7 +49,7 @@ export default function SignUpForm() {
           placeholder="letters, numbers, no space"
           error={errors?.username}
         />
-        <FormUtility.InputField
+        <forms.InputField
           label="Email"
           type="text"
           name="email"
@@ -82,7 +59,7 @@ export default function SignUpForm() {
           required={true}
           error={errors?.email}
         />
-        <FormUtility.InputField
+        <forms.InputField
           label="Password"
           type="password"
           name="password"
@@ -92,17 +69,17 @@ export default function SignUpForm() {
           required={true}
           error={errors?.password}
         />
-        <FormUtility.InputField
+        <forms.InputField
           label="Confirm Password"
           type="password"
-          name="repeatPassword"
+          name="repeat_password"
           placeholder="Make sure it matches"
           onChange={updateField}
-          state={form.repeatPassword}
+          state={form.repeat_password}
           required={true}
           error={errors?.password}
         />
-        <FormUtility.InputField
+        <forms.InputField
           label="Age"
           type="number"
           name="age"
@@ -114,20 +91,20 @@ export default function SignUpForm() {
           required={true}
           error={errors?.age}
         />
-        <FormUtility.SelectField
+        <forms.SelectField
           label="Gender"
-          options={GENDERS}
+          options={forms.selectOptions.GENDERS}
           name="gender"
           state={form.gender}
           placeholder="Gender of preference"
           onChange={updateField}
           error={errors?.gender}
         />
-        <FormUtility.SelectField
+        <forms.SelectField
           label="Primary Sport"
-          options={PRIMARY_SPORTS}
-          name="primarySport"
-          state={form.primarySport}
+          options={forms.selectOptions.PRIMARY_SPORTS}
+          name="primary_sport"
+          state={form.primary_sport}
           placeholder="How do you like to play?"
           onChange={updateField}
           error={errors?.primary_sport}

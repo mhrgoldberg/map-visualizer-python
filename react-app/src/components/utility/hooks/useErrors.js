@@ -1,8 +1,8 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { clearErrors } from '../store/errors'
+import { clearErrors } from '../../../store/errors'
 
-export function useErrors() {
+export default function useErrors() {
   const dispatch = useDispatch()
 
   const errors = useSelector((state) => {

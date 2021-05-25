@@ -1,10 +1,8 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { login } from '../../store/auth'
-import { useErrors } from '../../hooks/errors'
-import { FormUtility } from '../utility'
-import { useCurrentUser } from '../../hooks/user'
+import { forms, useErrors, useFormState, useCurrentUser } from '../utility'
 
 export default function LoginForm() {
   const dispatch = useDispatch()
@@ -13,21 +11,18 @@ export default function LoginForm() {
   useClearErrorsOnUnmount()
 
   // Form State
-  const [form, setForm] = useState({
-    email: { value: '', updated: false },
-    password: { value: '', updated: false },
-  })
-
-  const updateField = FormUtility.updateFieldGenerator(form, setForm)
+  const [form, { updateField, setUpdatedStatusFalse, formatSubmit }] =
+    useFormState({
+      email: '',
+      password: '',
+    })
 
   const onLogin = (e) => {
     e.preventDefault()
-    setForm({
-      email: { value: form.email.value, updated: false },
-      password: { value: form.password.value, updated: false },
-    })
-    dispatch(login(form.email.value, form.password.value))
+    setUpdatedStatusFalse()
+    dispatch(login(formatSubmit()))
   }
+
   // render
   if (authenticated) {
     return <Redirect to="/dashboard" />
@@ -35,7 +30,7 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={onLogin}>
-      <FormUtility.InputField
+      <forms.InputField
         name="email"
         type="text"
         label="Email"
@@ -45,7 +40,7 @@ export default function LoginForm() {
         required={true}
         error={errors?.password}
       />
-      <FormUtility.InputField
+      <forms.InputField
         name="password"
         type="password"
         label="Password"

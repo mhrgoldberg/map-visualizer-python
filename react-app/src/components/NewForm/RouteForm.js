@@ -1,8 +1,7 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useErrors } from '../../hooks/errors'
 import { signUp } from '../../store/auth'
-import { FormUtility } from '../utility'
+import { forms, useErrors } from '../utility'
 
 export default function SignUpForm() {
   const dispatch = useDispatch()
@@ -16,6 +15,7 @@ export default function SignUpForm() {
     title: { value: '', updated: false },
     data: { value: '', updated: false },
   })
+  forms.updateFieldGenerator(form, setForm)
 
   const onSubmit = async (e) => {
     e.preventDefault()
@@ -30,15 +30,24 @@ export default function SignUpForm() {
   return (
     <>
       <form onSubmit={onSubmit}>
-        <FormUtility.InputField
-          label="User Name"
+        <forms.InputField
+          label="Title"
           type="text"
-          name="username"
+          name="title"
           onChange={updateField}
-          state={form.username}
+          state={form.title}
           required={true}
           placeholder="letters, numbers, no space"
-          error={errors?.username}
+          error={errors?.title}
+        />
+        <forms.SelectField
+          label="RouteType"
+          options={forms.selectOptions.PRIMARY_SPORTS}
+          name="primarySport"
+          state={form.primarySport}
+          placeholder="How do you like to play?"
+          onChange={updateField}
+          error={errors?.primary_sport}
         />
 
         <button type="submit">Sign Up</button>

@@ -5,7 +5,6 @@ import NavLinkItem from './NavLinkItem'
 
 export default function UnauthorizedRoutesNavbar() {
   const path = useLocation().pathname
-  console.log(path)
   return (
     <Nav>
       {path !== '/login' && path !== '/' && (

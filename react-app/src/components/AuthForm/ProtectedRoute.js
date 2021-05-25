@@ -1,6 +1,6 @@
 import React from 'react'
 import { Route, Redirect } from 'react-router-dom'
-import { useCurrentUser } from '../../hooks/user'
+import { useCurrentUser } from '../utility'
 
 export default function ProtectedRoute(props) {
   const authenticated = !!useCurrentUser()

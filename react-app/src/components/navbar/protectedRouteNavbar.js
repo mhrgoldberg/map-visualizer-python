@@ -1,15 +1,15 @@
 import React from 'react'
 import styled from 'styled-components'
-import { AddButton, LogoutButton } from '../utility'
+import { icons } from '../utility'
 import NavLinkItem from './NavLinkItem'
 
 export default function ProtectedRouteNavbar() {
   return (
     <Nav className="column3">
       <NavLinkItem to="/new" transparent={true}>
-        <AddButton />
+        <icons.AddButton />
       </NavLinkItem>
-      <LogoutButton />
+      <icons.LogoutButton />
     </Nav>
   )
 }

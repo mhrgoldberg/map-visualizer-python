@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
-import { logout } from '../../store/auth'
+import { logout } from '../../../store/auth'
 
 export default function LogoutButton() {
   const dispatch = useDispatch()
@@ -18,10 +18,10 @@ export default function LogoutButton() {
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-        class="feather feather-log-out"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        className="feather feather-log-out"
       >
         <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
         <polyline points="16 17 21 12 16 7"></polyline>

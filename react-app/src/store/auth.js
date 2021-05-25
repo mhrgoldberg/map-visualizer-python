@@ -16,16 +16,13 @@ export const authenticate = () => async (dispatch) => {
   if (res.ok) dispatch(setUser(user))
 }
 
-export const login = (email, password) => async (dispatch) => {
+export const login = (payload) => async (dispatch) => {
   const res = await fetch('/api/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      email,
-      password,
-    }),
+    body: JSON.stringify(payload),
   })
   const user = await res.json()
   if (user.errors) {
@@ -44,13 +41,13 @@ export const logout = () => async (dispatch) => {
   if (res.ok) dispatch(logoutUser())
 }
 
-export const signUp = (data) => async (dispatch) => {
+export const signUp = (payload) => async (dispatch) => {
   const res = await fetch('/api/auth/signup', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(data),
+    body: JSON.stringify(payload),
   })
   const user = await res.json()
   if (user.errors) {

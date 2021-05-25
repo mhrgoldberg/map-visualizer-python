@@ -6,8 +6,10 @@ import { setErrors } from '../../store/errors'
 import { forms, useCurrentUser, useErrors, useFormState } from '../utility'
 
 export default function SignUpForm() {
+  // define dispatch
   const dispatch = useDispatch()
-  const authenticated = !!useCurrentUser()
+
+  // formState
   const [form, { updateField, setUpdatedStatusFalse, formatSubmit }] =
     useFormState({
       email: '',
@@ -22,6 +24,7 @@ export default function SignUpForm() {
   const [errors, useClearErrorsOnUnmount] = useErrors()
   useClearErrorsOnUnmount()
 
+  // onSubmit
   const onSignUp = async (e) => {
     e.preventDefault()
     setUpdatedStatusFalse()
@@ -31,6 +34,9 @@ export default function SignUpForm() {
       dispatch(setErrors({ password: 'Password fields do not match.' }))
     }
   }
+
+  // reidrect user if already logged in
+  const authenticated = !!useCurrentUser()
 
   if (authenticated) {
     return <Redirect to="/dashboard" />

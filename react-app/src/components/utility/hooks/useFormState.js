@@ -2,6 +2,8 @@ import { useState } from 'react'
 
 export default function useFormState(inputFields) {
   // fields should be an pojo in this format {<fieldName>:<defaultValue>}
+  const [form, setForm] = useState(createInitialState(inputFields))
+
   function createInitialState(fields) {
     const initialState = {}
     for (let fieldName in fields) {
@@ -12,7 +14,6 @@ export default function useFormState(inputFields) {
     }
     return initialState
   }
-  const [form, setForm] = useState(createInitialState(inputFields))
 
   function updateField(e) {
     const newState = { ...form }
@@ -35,10 +36,14 @@ export default function useFormState(inputFields) {
     setForm(newForm)
   }
 
-  function formatSubmit() {
+  function formatSubmit(exclude = []) {
+    // pass in exclude array of any fields to exclude from submit data
     const submitData = {}
     for (let fieldName in form) {
-      submitData[fieldName] = form[fieldName].value
+      if (!exclude.includes(fieldName)) {
+        submitData[fieldName] =
+          form[fieldName].value === '' ? null : form[fieldName].value
+      }
     }
     return submitData
   }

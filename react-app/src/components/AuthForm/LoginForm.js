@@ -19,8 +19,7 @@ export default function LoginForm() {
 
   const onLogin = (e) => {
     e.preventDefault()
-    setUpdatedStatusFalse()
-    dispatch(login(formatSubmit()))
+    dispatch(login(formatSubmit(), setUpdatedStatusFalse))
   }
 
   // render
@@ -38,7 +37,7 @@ export default function LoginForm() {
         placeholder={'example@example.com'}
         onChange={updateField}
         required={true}
-        error={errors?.password}
+        // error={errors?.password}
       />
       <forms.InputField
         name="password"

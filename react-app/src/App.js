@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react'
 import { BrowserRouter, Route } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 
+import { authenticate } from './store/auth'
 import { AuthForm, ProtectedRoute } from './components/AuthForm'
 import NavBar from './components/Navbar'
 import UsersList from './components/Profile/UsersList'
 import User from './components/Profile/User'
-import FileUpload from './components/NewForm/FileUpload'
-import { authenticate } from './store/auth'
+import NewForm from './components/NewForm'
 import Dashboard from './components/Dashboard'
 
 function App() {
@@ -37,7 +37,7 @@ function App() {
         <Dashboard />
       </ProtectedRoute>
       <ProtectedRoute path="/new" exact={true}>
-        <FileUpload />
+        <NewForm />
       </ProtectedRoute>
       <ProtectedRoute path="/routes" exact={true}>
         <UsersList />
@@ -46,7 +46,7 @@ function App() {
         <User />
       </ProtectedRoute>
       <ProtectedRoute path="/workouts" exact={true}>
-        <User />
+        <UsersList />
       </ProtectedRoute>
       <ProtectedRoute path="/workouts/:id" exact={true}>
         <UsersList />

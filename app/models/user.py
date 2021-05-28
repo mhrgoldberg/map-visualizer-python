@@ -21,7 +21,7 @@ class GenderOptions(Enum):
 class User(db.Model, UserMixin):
     """
     id: Integer, primary_key=True
-    user: name String(255), nullable=False, unique=True
+    username: String(255), nullable=False, unique=True
     email: String(255), nullable=False, unique=True
     password: String(255), nullable=False
     gender: Enum(GenderOptions)
@@ -85,7 +85,7 @@ class User(db.Model, UserMixin):
         return {
             "id": self.id,
             "username": self.username,
-            "email": self.email,
+            "email": self.email
         }
 
     def to_dict(self):
@@ -96,9 +96,9 @@ class User(db.Model, UserMixin):
             "id": self.id,
             "username": self.username,
             "email": self.email,
-            "gender": self.gender.name,
+            "gender": self.gender.name if self.gender else "",
             "age": self.age,
-            "primary_sport": self.primary_sport.name
+            "primary_sport": self.primary_sport.name if self.primary_sport else ""
         }
 
     def to_routes_dict(self):

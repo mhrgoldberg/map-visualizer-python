@@ -12,6 +12,7 @@ export default function InputField({
   required = false,
 }) {
   if (!placeholder) placeholder = label
+  console.info(error)
   return (
     <FormDiv>
       {label && <label>{label}</label>}
@@ -21,7 +22,7 @@ export default function InputField({
         name={name}
         onChange={onChange}
         value={error && !state.updated ? '' : state.value}
-        placeholder={error && !state.updated ? error : placeholder}
+        placeholder={error ? error : placeholder}
         required={required}
       ></input>
     </FormDiv>

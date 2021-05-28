@@ -1,30 +1,28 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch } from 'react-redux'
-import { signUp } from '../../store/auth'
-import { forms, useErrors } from '../utility'
+import FileUpload from './FileUpload'
+import { saveRoute } from '../../store/routes'
+import { forms, useErrors, useFormState } from '../utility'
 
 export default function SignUpForm() {
   const dispatch = useDispatch()
+
+  // form state
+  const [form, { updateField, setUpdatedStatusFalse, formatSubmit }] =
+    useFormState({
+      title: '',
+      data: {},
+    })
 
   // Redux error handling
   const [errors, useClearErrorsOnUnmount] = useErrors()
   useClearErrorsOnUnmount()
 
-  // Form State
-  const [form, setForm] = useState({
-    title: { value: '', updated: false },
-    data: { value: '', updated: false },
-  })
-  forms.updateFieldGenerator(form, setForm)
-
+  // On Submit
   const onSubmit = async (e) => {
     e.preventDefault()
-    setForm({
-      title: { value: form.title.value, updated: false },
-      data: { value: form.data.value, updated: false },
-    })
-
-    dispatch(signUp(data))
+    setUpdatedStatusFalse()
+    dispatch(saveRoute(formatSubmit()))
   }
 
   return (
@@ -40,7 +38,7 @@ export default function SignUpForm() {
           placeholder="letters, numbers, no space"
           error={errors?.title}
         />
-        <forms.SelectField
+        {/* <forms.SelectField
           label="RouteType"
           options={forms.selectOptions.PRIMARY_SPORTS}
           name="primarySport"
@@ -48,9 +46,10 @@ export default function SignUpForm() {
           placeholder="How do you like to play?"
           onChange={updateField}
           error={errors?.primary_sport}
-        />
+        /> */}
+        <FileUpload />
 
-        <button type="submit">Sign Up</button>
+        <button type="submit">Create Route</button>
       </form>
     </>
   )

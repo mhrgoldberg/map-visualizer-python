@@ -16,7 +16,7 @@ export const authenticate = () => async (dispatch) => {
   if (res.ok) dispatch(setUser(user))
 }
 
-export const login = (payload) => async (dispatch) => {
+export const login = (payload, setUpdatedStatusFalse) => async (dispatch) => {
   const res = await fetch('/api/auth/login', {
     method: 'POST',
     headers: {
@@ -26,6 +26,7 @@ export const login = (payload) => async (dispatch) => {
   })
   const user = await res.json()
   if (user.errors) {
+    setUpdatedStatusFalse()
     dispatch(setErrors(user.errors))
   } else {
     dispatch(setUser(user))
@@ -41,7 +42,7 @@ export const logout = () => async (dispatch) => {
   if (res.ok) dispatch(logoutUser())
 }
 
-export const signUp = (payload) => async (dispatch) => {
+export const signUp = (payload, setUpdatedStatusFalse) => async (dispatch) => {
   const res = await fetch('/api/auth/signup', {
     method: 'POST',
     headers: {
@@ -51,6 +52,7 @@ export const signUp = (payload) => async (dispatch) => {
   })
   const user = await res.json()
   if (user.errors) {
+    setUpdatedStatusFalse()
     dispatch(setErrors(user.errors))
   } else {
     dispatch(setUser(user))

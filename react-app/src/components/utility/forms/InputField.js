@@ -12,7 +12,6 @@ export default function InputField({
   required = false,
 }) {
   if (!placeholder) placeholder = label
-  console.info(error)
   return (
     <FormDiv>
       {label && <label>{label}</label>}

@@ -6,7 +6,7 @@ from flask_wtf.csrf import generate_csrf
 from flask_login import LoginManager
 
 from .models import db, User
-from .api import auth_controller, users_controller, routes_controller
+from .api import auth_controller, users_controller, tracks_controller
 
 from .seeds import seed_commands
 
@@ -30,10 +30,11 @@ app.cli.add_command(seed_commands)
 
 app.register_blueprint(auth_controller, url_prefix='/api/auth')
 app.register_blueprint(users_controller, url_prefix='/api/users')
-app.register_blueprint(routes_controller, url_prefix='/api/routes')
+app.register_blueprint(tracks_controller, url_prefix='/api/tracks')
 
 db.init_app(app)
 Migrate(app, db)
+
 # Application Security
 CORS(app)
 

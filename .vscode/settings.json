@@ -1,4 +1,8 @@
 {
-  "python.pythonPath": "/Users/nirvana/Dev/portfolio/map-visualizer-python/.venv/bin/python3.9",
-  "python.linting.flake8Enabled": true
+  "python.pythonPath": ".venv/bin/python",
+  "python.linting.flake8Enabled": true,
+  "python.linting.pycodestyleEnabled": false,
+  "python.linting.enabled": true,
+  "python.linting.mypyEnabled": false,
+  "cSpell.words": ["atemp", "pydantic"]
 }

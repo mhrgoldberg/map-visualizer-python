@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import ProtectedRouteNavbar from './protectedRouteNavbar'
-import UnauthorizedRoutesNavbar from './unauthorizedRoutesNavbar'
+import ProtectedRouteNavbar from './ProtectedRouteNavbar'
+import UnauthorizedRoutesNavbar from './UnauthorizedRoutesNavbar'
 import NavLinkItem from './NavLinkItem'
 import { icons, useCurrentUser } from '../utility'
 

@@ -15,7 +15,7 @@ export const resetUserRoutes = (routes) => ({
 })
 
 export const getAllRoutes = () => async (dispatch) => {
-  const res = await fetch('/api/routes', { method: 'GET' })
+  const res = await fetch('/api/tracks', { method: 'GET' })
   const response = await res.json()
   if (response.errors) {
     dispatch(setErrors(response.errors))
@@ -25,12 +25,9 @@ export const getAllRoutes = () => async (dispatch) => {
 }
 
 export const saveRoute = (payload) => async (dispatch) => {
-  const res = await fetch('/api/routes', {
+  const res = await fetch('/api/tracks', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
+    body: payload,
   })
   const response = await res.json()
   if (response.errors) {

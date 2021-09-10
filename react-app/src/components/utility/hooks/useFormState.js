@@ -38,11 +38,13 @@ export default function useFormState(inputFields) {
 
   function formatSubmit(exclude = []) {
     // pass in exclude array of any fields to exclude from submit data
-    const submitData = {}
+    const submitData = new FormData()
     for (let fieldName in form) {
       if (!exclude.includes(fieldName)) {
-        submitData[fieldName] =
+        submitData.append(
+          fieldName,
           form[fieldName].value === '' ? null : form[fieldName].value
+        )
       }
     }
     return submitData

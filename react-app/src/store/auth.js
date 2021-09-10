@@ -7,11 +7,7 @@ export const logoutUser = () => ({ type: LOGOUT_USER })
 export const setUser = (user) => ({ type: SET_USER, user })
 
 export const authenticate = () => async (dispatch) => {
-  const res = await fetch('/api/auth', {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
+  const res = await fetch('/api/auth')
   const user = await res.json()
   if (res.ok) dispatch(setUser(user))
 }
@@ -19,10 +15,7 @@ export const authenticate = () => async (dispatch) => {
 export const login = (payload, setUpdatedStatusFalse) => async (dispatch) => {
   const res = await fetch('/api/auth/login', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
+    body: payload,
   })
   const user = await res.json()
   if (user.errors) {
@@ -34,21 +27,14 @@ export const login = (payload, setUpdatedStatusFalse) => async (dispatch) => {
 }
 
 export const logout = () => async (dispatch) => {
-  const res = await fetch('/api/auth/logout', {
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
+  const res = await fetch('/api/auth/logout')
   if (res.ok) dispatch(logoutUser())
 }
 
 export const signUp = (payload, setUpdatedStatusFalse) => async (dispatch) => {
   const res = await fetch('/api/auth/signup', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
+    body: payload,
   })
   const user = await res.json()
   if (user.errors) {

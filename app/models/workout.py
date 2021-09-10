@@ -5,7 +5,7 @@ from typing import TextIO
 from .db import db
 from .track import Track
 # gpx
-import gpxpy
+from gpxpy import parse
 from gpxpy.gpx import GPXTrack, GPXRoute, MovingData
 
 
@@ -66,9 +66,10 @@ class Workout(db.Model):
     def create_workout_from_gpx(
             cls, file: TextIO, title: str, user_id: int) -> Workout:
         """
-        Parses gpx file and creates Route Instance related Trackpoint Instances
+        Parses gpx file using gpxpy parse function and creates Route object
+        of related Trackpoint objects.
         """
-        gpx_route: GPXRoute = gpxpy.parse(file)
+        gpx_route: GPXRoute = parse(file)
         # initialize new route instance
         new_workout = cls(title=title, user_id=user_id)
 
@@ -76,7 +77,6 @@ class Workout(db.Model):
         for track in gpx_route.tracks:
             # remove empty datapoints
             track.remove_empty()
-            # bounds: TimeBounds = track.get_bounds()
             moving_data: MovingData = track.get_moving_data()
             # time_bounds: TimeBounds = track.get_time_bounds()
 

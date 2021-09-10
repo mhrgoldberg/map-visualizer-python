@@ -11,7 +11,6 @@ def authenticate():
     """
     Authenticates a user.
     """
-    print(current_user)
     if current_user.is_authenticated:
         return current_user.to_simple_dict()
     return {'errors': {"auth": "unauthorized"}}, 401
@@ -51,12 +50,16 @@ def sign_up():
     form = SignUpForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+        if form.primary_sport.data == 'null':
+            form.primary_sport.data = None
+        if form.gender.data == 'null':
+            form.gender.data = None
         user = User()
         form.populate_obj(user)
         db.session.add(user)
         db.session.commit()
         login_user(user)
-        return user.to_dict()
+        return user.to_simple_dict()
     return {'errors': form.errors}, 400
 
 

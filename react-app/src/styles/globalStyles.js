@@ -18,7 +18,10 @@ export const GlobalStyles = createGlobalStyle`
     /* Secondary Colors */
     --secondary-dark: #1c2541;
     --secondary-cyan: #6fffe9;
-    --secondary-pink: #DB7093; 
+    --secondary-pink: #DB7093;
+
+    /* sizing */
+    --input-border-radius: 0.3rem;
   }
 
   /* Body */
@@ -79,7 +82,7 @@ export const GlobalStyles = createGlobalStyle`
 
   /* Text */
   p {
-    font-size: 0.8rem;
+    font-size: 1.2rem;
     line-height: 1.6;
   }
 
@@ -164,7 +167,7 @@ export const GlobalStyles = createGlobalStyle`
     font-size: 2.0rem;
     /* style */
     background: transparent;
-    border-radius: .3rem;
+    border-radius: var(--input-border-radius);
     border: 0.2rem solid var(--primary-cyan);
     color: var(--primary-cyan);
   }

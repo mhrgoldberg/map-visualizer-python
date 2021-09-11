@@ -13,7 +13,7 @@
         "FLASK_APP": "app",
         "FLASK_ENV": "development"
       },
-      "args": ["run", "--no-debugger", "--no-reloader"],
+      "args": ["run", "--no-debugger"],
       "jinja": true
     }
   ]

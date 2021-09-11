@@ -1,18 +1,23 @@
 import React from 'react'
 import { useDispatch } from 'react-redux'
+import styled from 'styled-components'
+
 import FileUpload from './FileUpload'
 import { saveRoute } from '../../store/routes'
 import { forms, useErrors, useFormState } from '../utility'
 
-export default function SignUpForm() {
+export default function RouteForm() {
   const dispatch = useDispatch()
 
   // form state
-  const [form, { updateField, setUpdatedStatusFalse, formatSubmit }] =
-    useFormState({
-      title: '',
-      data: {},
-    })
+  const [
+    form,
+    { updateField, updateFieldByName, setUpdatedStatusFalse, formatSubmit },
+  ] = useFormState({
+    title: '',
+    // primary_sport: '',
+    file: null,
+  })
 
   // Redux error handling
   const [errors, useClearErrorsOnUnmount] = useErrors()
@@ -26,7 +31,7 @@ export default function SignUpForm() {
   }
 
   return (
-    <>
+    <FormContainer>
       <form onSubmit={onSubmit}>
         <forms.InputField
           label="Title"
@@ -35,7 +40,7 @@ export default function SignUpForm() {
           onChange={updateField}
           state={form.title}
           required={true}
-          placeholder="letters, numbers, no space"
+          placeholder="Where are you trekking, mate?"
           error={errors?.title}
         />
         {/* <forms.SelectField
@@ -47,10 +52,19 @@ export default function SignUpForm() {
           onChange={updateField}
           error={errors?.primary_sport}
         /> */}
-        <FileUpload />
-
+        <FileUpload updateFieldByName={updateFieldByName} />
         <button type="submit">Create Route</button>
       </form>
-    </>
+    </FormContainer>
   )
 }
+
+const FormContainer = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4rem;
+`

@@ -25,7 +25,7 @@ export const getAllRoutes = () => async (dispatch) => {
 }
 
 export const saveRoute = (payload) => async (dispatch) => {
-  const res = await fetch('/api/tracks', {
+  const res = await fetch('/api/tracks/', {
     method: 'POST',
     body: payload,
   })

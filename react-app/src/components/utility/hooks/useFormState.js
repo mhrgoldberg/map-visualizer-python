@@ -25,6 +25,16 @@ export default function useFormState(inputFields) {
     setForm(newState)
   }
 
+  function updateFieldByName(fieldName, value) {
+    const newState = { ...form }
+    const newField = newState[fieldName]
+    if (!newField.updated) {
+      newField.updated = true
+    }
+    newField.value = value
+    setForm(newState)
+  }
+
   function setUpdatedStatusFalse() {
     const newForm = {}
     for (let fieldName in form) {
@@ -50,5 +60,8 @@ export default function useFormState(inputFields) {
     return submitData
   }
 
-  return [form, { setUpdatedStatusFalse, formatSubmit, updateField }]
+  return [
+    form,
+    { setUpdatedStatusFalse, formatSubmit, updateField, updateFieldByName },
+  ]
 }

@@ -78,7 +78,6 @@ class Workout(db.Model):
             # remove empty datapoints
             track.remove_empty()
             moving_data: MovingData = track.get_moving_data()
-            # time_bounds: TimeBounds = track.get_time_bounds()
 
             new_workout.duration = track.get_duration()
             new_workout.moving_time = moving_data.moving_time

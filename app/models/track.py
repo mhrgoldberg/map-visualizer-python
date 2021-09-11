@@ -1,12 +1,13 @@
 from __future__ import annotations
 # GPX parsing library
+from gpxpy import parse
 from gpxpy.gpx import (
     GPXTrackSegment, GPXTrack, MinimumMaximum, MovingData, GPXBounds,
-    UphillDownhill
+    UphillDownhill, GPXRoute
 )
 from gpxpy.geo import Location
 # typing
-from typing import Dict, Union, List
+from typing import Dict, Union, List, TextIO
 # Models
 from .db import db
 from .trackpoint import TrackPoint
@@ -23,6 +24,14 @@ class Track(db.Model):
     distance: Float, nullable=False
     ascent: Float
     descent: Float
+    center_latitude: Float
+    center_longitude: Float
+    min_latitude: Float
+    min_longitude: Float
+    max_latitude: Float
+    max_longitude: Float
+    min_elevation: Float
+    max_elevation: Float
     created_at: DateTime, default=now
     updated_at: DateTime, default=now, onupdate=now
     +relationships: user, track_points, workouts
@@ -90,6 +99,28 @@ class Track(db.Model):
             "ascent": self.ascent,
             "descent": self.descent
         }
+
+    @classmethod
+    def create_track_from_gpx_file(
+            cls, file: TextIO, title: str, user_id: int) -> List[Track]:
+        """
+        Parses gpx file and creates Route Instance related Trackpoint Instances
+        """
+        gpx_route: GPXRoute = parse(file)
+        # return list if multiple tracks are created
+        tracks: List[Track] = []
+        track: GPXTrack
+        for track in gpx_route.tracks:
+            # remove empty datapoints
+            track.remove_empty()
+
+            new_track = Track.create_track_from_gpx_track(
+                track, title=f"{title} track", user_id=user_id)
+            db.session.add(new_track)
+            tracks.append(new_track)
+        # db.session.bulk_save_objects(tracks)
+        db.session.commit()
+        return tracks
 
     @classmethod
     def create_track_from_gpx_track(

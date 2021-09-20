@@ -6,7 +6,6 @@ import { setErrors } from '../../store/errors'
 import { forms, useCurrentUser, useErrors, useFormState } from '../utility'
 
 export default function SignUpForm() {
-  // define dispatch
   const dispatch = useDispatch()
 
   // formState
@@ -39,7 +38,6 @@ export default function SignUpForm() {
     }
   }
 
-  // reidrect user if already logged in
   const authenticated = !!useCurrentUser()
 
   if (authenticated) {

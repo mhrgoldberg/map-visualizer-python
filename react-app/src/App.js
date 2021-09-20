@@ -33,7 +33,7 @@ function App() {
       <Route path="/sign-up" exact={true}>
         <AuthForm form="Sign Up" />
       </Route>
-      <ProtectedRoute path="/dashboard" exact={true}>
+      <ProtectedRoute path="/" exact={true}>
         <Dashboard />
       </ProtectedRoute>
       <ProtectedRoute path="/new" exact={true}>

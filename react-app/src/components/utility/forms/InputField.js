@@ -1,5 +1,5 @@
 import React from 'react'
-import styled from 'styled-components'
+import { FormInputContainer } from '../../../styles/formStyles'
 
 export default function InputField({
   type,
@@ -13,7 +13,7 @@ export default function InputField({
 }) {
   if (!placeholder) placeholder = label
   return (
-    <FormDiv>
+    <FormInputContainer>
       {label && <label>{label}</label>}
       <input
         className={error && !state.updated ? 'formFieldError' : ''}
@@ -24,27 +24,6 @@ export default function InputField({
         placeholder={error ? error : placeholder}
         required={required}
       ></input>
-    </FormDiv>
+    </FormInputContainer>
   )
 }
-
-const FormDiv = styled.div`
-  /* layout */
-  height: fit-content;
-  width: calc(100% - 2rem);
-  display: grid;
-  grid-template-rows: auto;
-
-  .formFieldError {
-    border-bottom: 0.2rem solid var(--primary-alert) !important;
-    ::placeholder {
-      color: var(--primary-alert);
-    }
-  }
-
-  label {
-    width: 100%;
-    font-size: 2.2rem;
-    color: var(--primary-light);
-  }
-`

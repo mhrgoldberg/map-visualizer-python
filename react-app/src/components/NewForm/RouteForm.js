@@ -1,8 +1,7 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import styled from 'styled-components'
+import { Redirect } from 'react-router'
 
-import FileUpload from './FileUpload'
 import { saveRoute } from '../../store/routes'
 import { forms, useErrors, useFormState } from '../utility'
 
@@ -15,56 +14,52 @@ export default function RouteForm() {
     { updateField, updateFieldByName, setUpdatedStatusFalse, formatSubmit },
   ] = useFormState({
     title: '',
-    // primary_sport: '',
+    sport: '',
     file: null,
   })
+  const [responseStatus, setResponseStatus] = useState(false)
 
   // Redux error handling
   const [errors, useClearErrorsOnUnmount] = useErrors()
   useClearErrorsOnUnmount()
 
-  // On Submit
   const onSubmit = async (e) => {
     e.preventDefault()
     setUpdatedStatusFalse()
-    dispatch(saveRoute(formatSubmit()))
+    const response = await dispatch(saveRoute(formatSubmit()))
+    setResponseStatus(response)
   }
 
-  return (
-    <FormContainer>
-      <form onSubmit={onSubmit}>
-        <forms.InputField
-          label="Title"
-          type="text"
-          name="title"
-          onChange={updateField}
-          state={form.title}
-          required={true}
-          placeholder="Where are you trekking, mate?"
-          error={errors?.title}
-        />
-        {/* <forms.SelectField
-          label="RouteType"
-          options={forms.selectOptions.PRIMARY_SPORTS}
-          name="primarySport"
-          state={form.primarySport}
-          placeholder="How do you like to play?"
-          onChange={updateField}
-          error={errors?.primary_sport}
-        /> */}
-        <FileUpload updateFieldByName={updateFieldByName} />
-        <button type="submit">Create Route</button>
-      </form>
-    </FormContainer>
-  )
+  if (responseStatus) {
+    return <Redirect to="/" />
+  } else {
+    return (
+      <>
+        <forms.ErrorsList errors={errors} />
+        <form onSubmit={onSubmit}>
+          <forms.InputField
+            label="Title"
+            type="text"
+            name="title"
+            onChange={updateField}
+            state={form.title}
+            required={true}
+            placeholder="Where are you trekking, mate?"
+            error={errors?.title}
+          />
+          <forms.SelectField
+            label="Route Type"
+            options={forms.selectOptions.PRIMARY_SPORTS}
+            name="sport"
+            state={form.sport}
+            placeholder="What is your weapon of attack?"
+            onChange={updateField}
+            error={errors?.sport}
+          />
+          <forms.FileUpload updateFieldByName={updateFieldByName} />
+          <button type="submit">Create Route</button>
+        </form>
+      </>
+    )
+  }
 }
-
-const FormContainer = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-top: 4rem;
-`

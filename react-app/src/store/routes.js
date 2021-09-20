@@ -5,10 +5,12 @@ const ADD_TO_USER_ROUTES = 'routes/ADD_TO_USER_ROUTES'
 const RESET_USER_ROUTES = 'routes/RESET_USER_ROUTES'
 
 export const setRoute = (route) => ({ type: SET_ROUTE, payload: route })
+
 export const addToUserRoutes = (route) => ({
   type: ADD_TO_USER_ROUTES,
   payload: route,
 })
+
 export const resetUserRoutes = (routes) => ({
   type: RESET_USER_ROUTES,
   payload: routes,
@@ -32,9 +34,10 @@ export const saveRoute = (payload) => async (dispatch) => {
   const response = await res.json()
   if (response.errors) {
     dispatch(setErrors(response.errors))
+    return false
   } else {
-    dispatch(setRoute(response))
     dispatch(addToUserRoutes(response))
+    return true
   }
 }
 
@@ -52,7 +55,7 @@ export function routesReducer(state = defaultState, action) {
     case ADD_TO_USER_ROUTES: {
       newState.userRoutes = {
         ...state.userRoutes,
-        [action.payload.id]: action.payload,
+        ...action.payload,
       }
       return newState
     }

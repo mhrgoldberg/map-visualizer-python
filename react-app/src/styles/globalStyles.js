@@ -10,7 +10,7 @@ export const GlobalStyles = createGlobalStyle`
     --primary-dark: #0b132b;
     --primary-light: #8899A6;
     --primary-cyan: #5bc0be;
-    --primary-gray: #3a506b;
+    --primary-gray: #5d718a;
     --primary-pink: #BF5A7C;
     --primary-alert: #E88268;
     --primary-green: #6C9C2F;
@@ -131,6 +131,10 @@ export const GlobalStyles = createGlobalStyle`
     /* appearance: none; */
   }
 
+  select:hover {
+    cursor: pointer;
+  }
+
   input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
@@ -183,6 +187,17 @@ export const GlobalStyles = createGlobalStyle`
   }
 
   /* Headers */
+  .form-header{
+    grid-column: 1;
+    grid-row: 1;
+    /* layout */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+  }
+
   h1 {
     margin: .2rem;
     padding: .5rem;

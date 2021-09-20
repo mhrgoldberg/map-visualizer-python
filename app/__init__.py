@@ -1,4 +1,5 @@
 import os
+import logging
 from flask import Flask
 from flask_cors import CORS
 from flask_migrate import Migrate
@@ -14,9 +15,16 @@ from .config import Config
 
 app = Flask(__name__)
 app.config.from_object(Config)
+
 # Setup login manager
 login = LoginManager(app)
 login.login_view = 'auth.unauthorized'
+
+
+# Setup Logger
+logging.basicConfig(filename='errors.log', level=logging.DEBUG,
+                    format=f'%(asctime)s %(levelname)s %(name)s \
+                        %(threadName)s : %(message)s')
 
 
 @login.user_loader

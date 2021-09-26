@@ -35,8 +35,8 @@ export default function RouteForm() {
   } else {
     return (
       <>
-        <forms.ErrorsList errors={errors} />
         <form onSubmit={onSubmit}>
+          <forms.ErrorsList errors={errors} />
           <forms.InputField
             label="Title"
             type="text"

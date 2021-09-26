@@ -83,6 +83,10 @@ class Track(db.Model):
             "distance": self.distance,
             "ascent": self.ascent,
             "descent": self.descent,
+            "center": {
+                "lat": self.center_latitude,
+                "lng": self.center_longitude
+            },
             "track_points": [
                 track_point.to_dict() for track_point in self.track_points
             ]
@@ -113,12 +117,10 @@ class Track(db.Model):
         for track in gpx_route.tracks:
             # remove empty datapoints
             track.remove_empty()
-
             new_track = Track.create_track_from_gpx_track(
                 track, title=f"{title} track", user_id=user_id)
             db.session.add(new_track)
             tracks.append(new_track)
-        # db.session.bulk_save_objects(tracks)
         db.session.commit()
         return tracks
 

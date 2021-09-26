@@ -2,25 +2,23 @@ from sqlalchemy import exc
 from flask import Blueprint, request, current_app
 from flask_login import current_user, login_required
 from sqlalchemy.orm import joinedload
-# from flask_pydantic import validate
 from app.models import Track
-from app.utility import validate_gpx_file
-from devtools import debug
-# from app.forms.tracks_models import TrackRequestBody
-
+from app.forms import TrackForm
 
 tracks_controller = Blueprint('tracks_controller', __name__)
 
 tracks_controller = Blueprint("routes", __name__)
 
 
-@tracks_controller.route("")
+@tracks_controller.route("/")
 @login_required
-def all_routes():
+def all_routes() -> dict:
     """
     Return a to_simple_dict() of the current users routes
     """
-    return [route.to_simple_dict() for route in current_user.routes]
+    return {
+        f"{track.id}": track.to_simple_dict() for track in current_user.tracks
+    }
 
 
 @tracks_controller.route("/<int:track_id>", methods=["GET"])
@@ -30,7 +28,7 @@ def get_track(track_id: int) -> dict:
     Return a to_dict() of the current users route
     """
     track = Track.query.options(joinedload(
-        Track.track_points)).get(track_id).first()
+        Track.track_points)).get(track_id)
     if track is None or track.user_id != current_user.id:
         return {
             "errors": {"track": "Sorry, this track does not exist."}
@@ -38,26 +36,20 @@ def get_track(track_id: int) -> dict:
     return track.to_dict()
 
 
-def allowed_file(filename):
-    """
-    Utility to check if the file extension is in the ALLOWED_EXTENSIONS.
-    """
-    ALLOWED_EXTENSIONS = {'gpx'}
-    return '.' in filename and \
-           filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-
 @tracks_controller.route("/", methods=["POST"])
 @login_required
-def create_track():
+def create_track() -> dict:
     """
     Check if a file is present and a valid file type, then create a new track.
     """
-    isValid, response = validate_gpx_file(request)
-    if isValid is True:
+    form = TrackForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    form['file'].data = request.files.get("file", None)
+
+    if form.validate_on_submit():
         try:
             new_tracks = Track.create_track_from_gpx_file(
-                response, request.form['title'], current_user.id)
+                form['file'].data, request.form['title'], current_user.id)
             return {
                 track.id: track.to_simple_dict() for track in new_tracks
             }, 201
@@ -68,4 +60,6 @@ def create_track():
                     track. Please try again with."}
             }, 400
     else:
-        return response
+        return {
+            "errors": form.errors
+        }, 400

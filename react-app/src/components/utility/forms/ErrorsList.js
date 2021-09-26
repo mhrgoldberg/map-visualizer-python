@@ -1,15 +1,11 @@
 import React from 'react'
 import styled from 'styled-components'
 
-export default function ErrorsList({ errors, displayKeys }) {
-  const displayErrors = Object.entries(errors).filter(
-    ([key, _]) => key in displayKeys
-  )
-
+export default function ErrorsList({ errors }) {
   return (
     <Ul className="errorsList">
-      {displayErrors.map((error, i) => (
-        <li key={i}>{error[1]}</li>
+      {Object.entries(errors).map((error, i) => (
+        <li key={error[0] + i}>{error[1]}</li>
       ))}
     </Ul>
   )

@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { useState, useCallback } from 'react'
 import { FormInputContainer } from '../../../styles/formStyles'
 
-export default function FileUpload({ updateFieldByName }) {
+export default function FileUpload({ updateFieldByName, error }) {
   const [file, setFile] = useState(null)
 
   const onDrop = useCallback(
@@ -26,7 +26,7 @@ export default function FileUpload({ updateFieldByName }) {
     isDragReject,
   } = useDropzone({ onDrop, maxFiles: 1 })
 
-  if (file) {
+  if (!error && file) {
     return <div>{file.name}</div>
   } else {
     return (
@@ -34,11 +34,13 @@ export default function FileUpload({ updateFieldByName }) {
         <label>Upload a GPX File</label>
         <FileUploadContainer
           {...getRootProps({ isDragActive, isDragAccept, isDragReject })}
+          error={error}
         >
           <input {...getInputProps()} />
           <p>
-            Drag 'n' drop or click to select a GPX file. Only one file can be
-            uploaded per route.
+            {error ||
+              "Drag 'n' drop or click to select a GPX file. Only one file can \
+              be uploaded per route."}
           </p>
         </FileUploadContainer>
       </FormInputContainer>
@@ -47,7 +49,7 @@ export default function FileUpload({ updateFieldByName }) {
 }
 
 const getColor = (props, defaultColor = 'var(--primary-cyan)') => {
-  if (props.errors?.file || props.isDragReject) {
+  if (props.errors?.file || props.isDragReject || props?.error) {
     return 'var(--primary-alert)'
   }
   if (props.isDragAccept) {

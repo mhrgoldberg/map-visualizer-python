@@ -1,21 +1,8 @@
-from enum import Enum, auto
+
 from .db import db
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
-
-
-class PrimarySportOptions(Enum):
-    Cycle = auto()
-    Run = auto()
-    Hike = auto()
-    MultiSport = auto()
-    Other = auto()
-
-
-class GenderOptions(Enum):
-    Male = auto()
-    Female = auto()
-    Other = auto()
+from app.utility import SportOptions, GenderOptions
 
 
 class User(db.Model, UserMixin):
@@ -26,7 +13,7 @@ class User(db.Model, UserMixin):
     password: String(255), nullable=False
     gender: Enum(GenderOptions)
     age: Integer
-    primary_sport: Enum(PrimarySportOptions)
+    primary_sport: Enum(SportOptions)
     created_at: DateTime, default=now
     updated_at: DateTime, default=now, onupdate=now
     +relationships: routes, workouts
@@ -45,7 +32,7 @@ class User(db.Model, UserMixin):
     hashed_password = db.Column(db.String(255), nullable=False)
     gender = db.Column(db.Enum(GenderOptions))
     age = db.Column(db.Integer())
-    primary_sport = db.Column(db.Enum(PrimarySportOptions))
+    primary_sport = db.Column(db.Enum(SportOptions))
 
     created_at = db.Column(
         db.DateTime(timezone=True),

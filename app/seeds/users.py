@@ -1,4 +1,4 @@
-from app.models.user import PrimarySportOptions, GenderOptions
+from app.utility import SportOptions, GenderOptions
 from app.models import db, User
 
 # Adds a demo user, you can add other users here if you want
@@ -11,7 +11,7 @@ def seed_users():
         password='password',
         age=44,
         gender=GenderOptions.Other,
-        primary_sport=PrimarySportOptions.Hike,
+        primary_sport=SportOptions.Hike,
     )
 
     nirvana = User(
@@ -20,7 +20,7 @@ def seed_users():
         password='password',
         age=30,
         gender=GenderOptions.Male,
-        primary_sport=PrimarySportOptions.MultiSport,
+        primary_sport=SportOptions.MultiSport,
     )
 
     db.session.add(demo)

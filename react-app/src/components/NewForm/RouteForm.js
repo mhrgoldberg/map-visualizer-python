@@ -36,7 +36,6 @@ export default function RouteForm() {
     return (
       <>
         <form onSubmit={onSubmit}>
-          <forms.ErrorsList errors={errors} />
           <forms.InputField
             label="Title"
             type="text"
@@ -56,7 +55,10 @@ export default function RouteForm() {
             onChange={updateField}
             error={errors?.sport}
           />
-          <forms.FileUpload updateFieldByName={updateFieldByName} />
+          <forms.FileUpload
+            updateFieldByName={updateFieldByName}
+            error={errors?.file}
+          />
           <button type="submit">Create Route</button>
         </form>
       </>

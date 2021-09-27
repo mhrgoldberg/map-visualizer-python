@@ -12,6 +12,8 @@ from typing import Dict, Union, List, TextIO
 from .db import db
 from .trackpoint import TrackPoint
 from .user import User
+# Options
+from app.utility import SportOptions
 
 # # Generic Variable for Route class
 # RouteType = TypeVar('RouteType', bound='Route')
@@ -42,6 +44,7 @@ class Track(db.Model):
     # Primary Columns
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(50), nullable=False)
+    sport_type = db.Column(db.Enum(SportOptions))
     distance = db.Column(db.Float, nullable=False)
     ascent = db.Column(db.Float)
     descent = db.Column(db.Float)

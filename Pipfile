@@ -31,6 +31,7 @@ dnspython = "==2.1.0"
 idna = "==3.1"
 gpxpy = "1.4.2"
 flask-pydantic = "0.8.0"
+polyline = "*"
 
 [dev-packages]
 psycopg2-binary = "==2.8.6"

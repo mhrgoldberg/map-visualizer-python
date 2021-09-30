@@ -11,7 +11,6 @@ from typing import Dict, Union, List, TextIO
 # Models
 from .db import db
 from .trackpoint import TrackPoint
-from .user import User
 # Options
 from app.utility import SportOptions
 
@@ -23,9 +22,11 @@ class Track(db.Model):
     """
     id: Integer, primary_key=True
     title: String(50), nullable=False
+    sport_type: Enum(SportOptions), nullable=False
     distance: Float, nullable=False
     ascent: Float
     descent: Float
+    polyline: Text
     center_latitude: Float
     center_longitude: Float
     min_latitude: Float
@@ -48,7 +49,7 @@ class Track(db.Model):
     distance = db.Column(db.Float, nullable=False)
     ascent = db.Column(db.Float)
     descent = db.Column(db.Float)
-    # todo Add polyline for tile in routes index
+    polyline = db.Column(db.Text)
     center_latitude = db.Column(db.Float)
     center_longitude = db.Column(db.Float)
     min_latitude = db.Column(db.Float)
@@ -90,6 +91,15 @@ class Track(db.Model):
                 "lat": self.center_latitude,
                 "lng": self.center_longitude
             },
+            "min": {
+                "lat": self.min_latitude,
+                "lng": self.min_longitude
+            },
+            "max": {
+                "lat": self.max_latitude,
+                "lng": self.max_longitude
+            },
+            "sport_type": self.sport_type,
             "track_points": [
                 track_point.to_dict() for track_point in self.track_points
             ]
@@ -102,16 +112,21 @@ class Track(db.Model):
         return {
             "id": self.id,
             "title": self.title,
+            "sport_type": self.sport_type.name if self.sport_type else None,
             "distance": self.distance,
             "ascent": self.ascent,
-            "descent": self.descent
+            "descent": self.descent,
+            "polyline": self.polyline
+
         }
 
     @classmethod
-    def create_track_from_gpx_file(
-            cls, file: TextIO, title: str, user_id: int) -> List[Track]:
+    def create_tracks_from_gpx_file(
+        cls, file: TextIO, title: str, sport_type: str, user_id: int
+    ) -> List[Track]:
         """
-        Parses gpx file and creates Route Instance related Trackpoint Instances
+        Parses gpx file and creates a Track and related TrackPoint objects
+        for each track segment
         """
         gpx_route: GPXRoute = parse(file)
         # return list if multiple tracks are created
@@ -121,7 +136,7 @@ class Track(db.Model):
             # remove empty datapoints
             track.remove_empty()
             new_track = Track.create_track_from_gpx_track(
-                track, title=f"{title} track", user_id=user_id)
+                track, title, sport_type, user_id)
             db.session.add(new_track)
             tracks.append(new_track)
         db.session.commit()
@@ -129,7 +144,8 @@ class Track(db.Model):
 
     @classmethod
     def create_track_from_gpx_track(
-            cls, track: GPXTrack, title: str, user_id: int) -> Track:
+        cls, track: GPXTrack, title: str, sport_type: str, user_id: int
+    ) -> Track:
         """
         Create a new Track and coresponding TrackPoint objects from a GPXTrack
         - Removes empty trackpoints
@@ -146,6 +162,7 @@ class Track(db.Model):
 
         new_track: Track = cls(
             title=title,
+            sport_type=sport_type,
             center_latitude=center.latitude,
             center_longitude=center.longitude,
             min_latitude=bounds.min_latitude,
@@ -163,7 +180,8 @@ class Track(db.Model):
         parsed_track_points: Union[List[TrackPoint], List] = []
         segment: GPXTrackSegment
         for segment in track.segments:
-            parsed_track_points = TrackPoint.create_track_points_from_gpx_segment(
+            parsed_track_points, polyline = TrackPoint.create_track_points_from_gpx_segment(
                 segment)
             new_track.track_points.extend(parsed_track_points)
+            new_track.polyline = polyline
         return new_track

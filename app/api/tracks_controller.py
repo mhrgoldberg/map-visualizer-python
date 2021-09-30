@@ -17,7 +17,7 @@ def all_routes() -> dict:
     Return a to_simple_dict() of the current users routes
     """
     return {
-        f"{track.id}": track.to_simple_dict() for track in current_user.tracks
+        track.id: track.to_simple_dict() for track in current_user.tracks
     }
 
 
@@ -48,16 +48,22 @@ def create_track() -> dict:
 
     if form.validate_on_submit():
         try:
-            new_tracks = Track.create_track_from_gpx_file(
-                form['file'].data, request.form['title'], current_user.id)
+            new_tracks = Track.create_tracks_from_gpx_file(
+                form['file'].data,
+                request.form['title'],
+                request.form['sport_type'],
+                current_user.id
+            )
             return {
                 track.id: track.to_simple_dict() for track in new_tracks
             }, 201
         except exc.SQLAlchemyError as e:
             current_app.logger.error(e)
             return {
-                "errors": {"form": "Sorry, there was an error saving your \
-                    track. Please try again with."}
+                "errors": {
+                    "form": "Sorry, there was an error saving your track.\
+                         Please try again with."
+                }
             }, 400
     else:
         return {

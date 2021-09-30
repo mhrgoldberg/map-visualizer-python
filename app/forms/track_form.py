@@ -7,6 +7,6 @@ from app.utility import SportOptions
 
 class TrackForm(FlaskForm):
     title = StringField(validators=[DataRequired()])
-    sport = StringField(
+    sport_type = StringField(
         validators=[DataRequired(), AnyOf(SportOptions.__members__.keys())])
     file = FileField(validators=[FileRequired(), FileAllowed(['gpx'])])

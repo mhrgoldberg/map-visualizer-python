@@ -14,7 +14,7 @@ export default function RouteForm() {
     { updateField, updateFieldByName, setUpdatedStatusFalse, formatSubmit },
   ] = useFormState({
     title: '',
-    sport: '',
+    sport_type: '',
     file: null,
   })
   const [responseStatus, setResponseStatus] = useState(false)
@@ -49,11 +49,11 @@ export default function RouteForm() {
           <forms.SelectField
             label="Route Type"
             options={forms.selectOptions.PRIMARY_SPORTS}
-            name="sport"
-            state={form.sport}
+            name="sport_type"
+            state={form.sport_type}
             placeholder="What is your weapon of attack?"
             onChange={updateField}
-            error={errors?.sport}
+            error={errors?.sport_type}
           />
           <forms.FileUpload
             updateFieldByName={updateFieldByName}

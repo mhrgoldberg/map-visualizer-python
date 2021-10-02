@@ -106,7 +106,7 @@ export default function SignUpForm() {
       />
       <forms.SelectField
         label="Primary Sport"
-        options={forms.selectOptions.PRIMARY_SPORTS}
+        options={forms.selectOptions.SPORT_OPTIONS}
         name="primary_sport"
         state={form.primary_sport}
         placeholder="How do you like to play? (optional)"

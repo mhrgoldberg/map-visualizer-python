@@ -48,7 +48,7 @@ export default function RouteForm() {
           />
           <forms.SelectField
             label="Route Type"
-            options={forms.selectOptions.PRIMARY_SPORTS}
+            options={forms.selectOptions.SPORT_OPTIONS}
             name="sport_type"
             state={form.sport_type}
             placeholder="What is your weapon of attack?"

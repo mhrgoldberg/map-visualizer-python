@@ -39,8 +39,7 @@ export default function FileUpload({ updateFieldByName, error }) {
           <input {...getInputProps()} />
           <p>
             {error ||
-              "Drag 'n' drop or click to select a GPX file. Only one file can \
-              be uploaded per route."}
+              "Drag 'n' drop or click to select a GPX file. Only one file can be uploaded per route."}
           </p>
         </FileUploadContainer>
       </FormInputContainer>

@@ -22,6 +22,7 @@ export const GlobalStyles = createGlobalStyle`
 
     /* sizing */
     --input-border-radius: 0.3rem;
+    --nav-height: 7rem;
   }
 
   /* Body */

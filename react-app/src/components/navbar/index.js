@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+
 import ProtectedRouteNavbar from './ProtectedRouteNavbar'
 import UnauthorizedRoutesNavbar from './UnauthorizedRoutesNavbar'
 import NavLinkItem from './NavLinkItem'
@@ -28,8 +29,9 @@ export default function NavBar() {
 
 const Header = styled.header`
   width: 100%;
-  height: 7rem;
+  height: var(--nav-height);
   display: flex;
+
   /* background-color: var(--secondary-dark); */
   border-bottom: 0.2rem solid var(--secondary-dark);
   justify-content: center;
@@ -58,8 +60,8 @@ const Header = styled.header`
     justify-items: space-between;
     align-content: center;
     align-items: center;
-    width: 90%;
+    width: 100%;
     max-width: 120rem;
-    height: 7rem;
+    height: var(--nav-height);
   }
 `

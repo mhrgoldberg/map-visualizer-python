@@ -42,7 +42,9 @@ export const saveRoute = (payload) => async (dispatch) => {
 }
 
 const defaultState = {
+  currentRoute: {},
   userRoutes: {},
+  ordering: [],
 }
 
 export function routesReducer(state = defaultState, action) {

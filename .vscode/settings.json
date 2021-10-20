@@ -1,5 +1,5 @@
 {
-  "python.pythonPath": "/Users/nirvana/.pyenv/versions/3.10.0/bin/python",
+  "python.pythonPath": ".venv/bin/python",
   "python.linting.flake8Enabled": true,
   "python.linting.pycodestyleEnabled": false,
   "python.linting.enabled": true,

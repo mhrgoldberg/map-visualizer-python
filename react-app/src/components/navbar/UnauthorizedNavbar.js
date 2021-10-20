@@ -1,9 +1,9 @@
 import React from 'react'
-import styled from 'styled-components'
 import { useLocation } from 'react-router-dom'
+import styled from 'styled-components'
 import NavLinkItem from './NavLinkItem'
 
-export default function UnauthorizedRoutesNavbar() {
+export default function UnauthorizedNavbar() {
   const path = useLocation().pathname
   return (
     <Nav>

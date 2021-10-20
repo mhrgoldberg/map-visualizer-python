@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { icons } from '../utility'
 import NavLinkItem from './NavLinkItem'
 
-export default function ProtectedRouteNavbar() {
+export default function ProtectedNavbar() {
   return (
     <Nav className="column3">
       <NavLinkItem to="/new" transparent={true}>

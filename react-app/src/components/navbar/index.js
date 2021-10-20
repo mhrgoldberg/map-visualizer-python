@@ -1,10 +1,9 @@
 import React from 'react'
 import styled from 'styled-components'
-
-import ProtectedRouteNavbar from './ProtectedRouteNavbar'
-import UnauthorizedRoutesNavbar from './UnauthorizedRoutesNavbar'
-import NavLinkItem from './NavLinkItem'
 import { icons, useCurrentUser } from '../utility'
+import NavLinkItem from './NavLinkItem'
+import ProtectedRouteNavbar from './ProtectedNavbar'
+import UnauthorizedRoutesNavbar from './UnauthorizedNavbar'
 
 export default function NavBar() {
   const authenticated = !!useCurrentUser()

@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import ProtectedRouteNavbar from './ProtectedRouteNavbar'
 import UnauthorizedRoutesNavbar from './UnauthorizedRoutesNavbar'
 import NavLinkItem from './NavLinkItem'
-import { icons, useCurrentUser } from '../utility'
+import { Logo, useCurrentUser } from '../utility'
 
 export default function NavBar() {
   const authenticated = !!useCurrentUser()
@@ -12,7 +12,7 @@ export default function NavBar() {
       <div className="navContainer">
         <NavLinkItem to="/" transparent={true}>
           <span>
-            <icons.Logo />
+            <Logo />
             <h5>MapVisualizer</h5>
           </span>
         </NavLinkItem>

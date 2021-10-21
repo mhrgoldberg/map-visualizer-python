@@ -1,13 +1,5 @@
-import InputField from './InputField'
-import SelectField from './SelectField'
-import ErrorsList from './ErrorsList'
-import FileUpload from './FileUpload'
-import selectOptions from './selectOptions'
-
-export default {
-  InputField,
-  SelectField,
-  ErrorsList,
-  FileUpload,
-  selectOptions,
-}
+export { default as InputField } from './InputField'
+export { default as SelectField } from './SelectField'
+export { default as ErrorsList } from './ErrorsList'
+export { default as FileUpload } from './FileUpload'
+export { default as selectOptions } from './selectOptions'

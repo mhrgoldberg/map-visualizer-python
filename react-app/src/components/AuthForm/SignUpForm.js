@@ -9,7 +9,7 @@ import {
   selectOptions,
   useCurrentUser,
   useErrors,
-  useFormState
+  useFormState,
 } from '../utility'
 
 export default function SignUpForm() {

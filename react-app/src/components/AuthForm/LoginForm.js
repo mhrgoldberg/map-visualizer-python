@@ -2,7 +2,7 @@ import React from 'react'
 import { Redirect } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { login } from '../../store/auth'
-import { forms, useErrors, useFormState, useCurrentUser } from '../utility'
+import { InputField, useErrors, useFormState, useCurrentUser } from '../utility'
 
 export default function LoginForm() {
   const dispatch = useDispatch()
@@ -29,7 +29,7 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={onLogin}>
-      <forms.InputField
+      <InputField
         name="email"
         type="text"
         label="Email"
@@ -39,7 +39,7 @@ export default function LoginForm() {
         required={true}
         // error={errors?.password}
       />
-      <forms.InputField
+      <InputField
         name="password"
         type="password"
         label="Password"

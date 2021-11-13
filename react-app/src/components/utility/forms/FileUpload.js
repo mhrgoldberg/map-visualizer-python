@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useCallback, useState } from 'react'
 import { useDropzone } from 'react-dropzone'
 import styled from 'styled-components'
-import { useState, useCallback } from 'react'
 import { FormInputContainer } from '../../../styles/formStyles'
 
 export default function FileUpload({ updateFieldByName, error }) {

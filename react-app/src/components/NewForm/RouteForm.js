@@ -1,9 +1,15 @@
 import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { Redirect } from 'react-router'
-
 import { saveRoute } from '../../store/routes'
-import { forms, useErrors, useFormState } from '../utility'
+import {
+  FileUpload,
+  InputField,
+  SelectField,
+  selectOptions,
+  useErrors,
+  useFormState,
+} from '../utility'
 
 export default function RouteForm() {
   const dispatch = useDispatch()
@@ -36,7 +42,7 @@ export default function RouteForm() {
     return (
       <>
         <form onSubmit={onSubmit}>
-          <forms.InputField
+          <InputField
             label="Title"
             type="text"
             name="title"
@@ -46,16 +52,16 @@ export default function RouteForm() {
             placeholder="Where are you trekking, mate?"
             error={errors?.title}
           />
-          <forms.SelectField
+          <SelectField
             label="Route Type"
-            options={forms.selectOptions.SPORT_OPTIONS}
-            name="sport_type"
+            options={selectOptions.SPORT_OPTIONS}
+            name="sport"
             state={form.sport_type}
             placeholder="What is your weapon of attack?"
             onChange={updateField}
             error={errors?.sport_type}
           />
-          <forms.FileUpload
+          <FileUpload
             updateFieldByName={updateFieldByName}
             error={errors?.file}
           />

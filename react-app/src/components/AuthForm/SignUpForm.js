@@ -3,7 +3,14 @@ import { useDispatch } from 'react-redux'
 import { Redirect } from 'react-router-dom'
 import { signUp } from '../../store/auth'
 import { setErrors } from '../../store/errors'
-import { forms, useCurrentUser, useErrors, useFormState } from '../utility'
+import {
+  InputField,
+  SelectField,
+  selectOptions,
+  useCurrentUser,
+  useErrors,
+  useFormState
+} from '../utility'
 
 export default function SignUpForm() {
   const dispatch = useDispatch()
@@ -46,7 +53,7 @@ export default function SignUpForm() {
 
   return (
     <form onSubmit={onSignUp}>
-      <forms.InputField
+      <InputField
         label="User Name"
         type="text"
         name="username"
@@ -56,7 +63,7 @@ export default function SignUpForm() {
         placeholder="letters, numbers, no space"
         error={errors?.username}
       />
-      <forms.InputField
+      <InputField
         label="Email"
         type="email"
         name="email"
@@ -66,7 +73,7 @@ export default function SignUpForm() {
         required={true}
         error={errors?.email}
       />
-      <forms.InputField
+      <InputField
         label="Password"
         type="password"
         name="password"
@@ -76,7 +83,7 @@ export default function SignUpForm() {
         required={true}
         error={errors?.password}
       />
-      <forms.InputField
+      <InputField
         label="Confirm Password"
         type="password"
         name="repeat_password"
@@ -86,7 +93,7 @@ export default function SignUpForm() {
         required={true}
         error={errors?.password}
       />
-      <forms.InputField
+      <InputField
         label="Age"
         type="number"
         name="age"
@@ -95,18 +102,18 @@ export default function SignUpForm() {
         state={form.age}
         error={errors?.age}
       />
-      <forms.SelectField
+      <SelectField
         label="Gender"
-        options={forms.selectOptions.GENDERS}
+        options={selectOptions.GENDERS}
         name="gender"
         state={form.gender}
         placeholder="Gender of preference (optional)"
         onChange={updateField}
         error={errors?.gender}
       />
-      <forms.SelectField
+      <SelectField
         label="Primary Sport"
-        options={forms.selectOptions.SPORT_OPTIONS}
+        options={selectOptions.SPORT_OPTIONS}
         name="primary_sport"
         state={form.primary_sport}
         placeholder="How do you like to play? (optional)"

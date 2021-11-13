@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { icons, useCurrentUser } from '../utility'
+import { Logo, useCurrentUser } from '../utility'
 import NavLinkItem from './NavLinkItem'
 import ProtectedRouteNavbar from './ProtectedNavbar'
 import UnauthorizedRoutesNavbar from './UnauthorizedNavbar'
@@ -12,7 +12,7 @@ export default function NavBar() {
       <div className="navContainer">
         <NavLinkItem to="/" transparent={true}>
           <span>
-            <icons.Logo />
+            <Logo />
             <h5>MapVisualizer</h5>
           </span>
         </NavLinkItem>

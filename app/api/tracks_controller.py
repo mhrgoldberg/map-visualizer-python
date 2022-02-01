@@ -1,9 +1,9 @@
-from sqlalchemy import exc
-from flask import Blueprint, request, current_app
-from flask_login import current_user, login_required
-from sqlalchemy.orm import joinedload
-from app.models import Track
 from app.forms import TrackForm
+from app.models import Track
+from flask import Blueprint, current_app, request
+from flask_login import current_user, login_required
+from sqlalchemy import exc
+from sqlalchemy.orm import joinedload
 
 tracks_controller = Blueprint('tracks_controller', __name__)
 
@@ -17,7 +17,11 @@ def all_routes() -> dict:
     Return a to_simple_dict() of the current users routes
     """
     return {
-        track.id: track.to_simple_dict() for track in current_user.tracks
+        "dict": {
+            track.id: track.to_simple_dict() for track in current_user.tracks
+        },
+        "ordering": [track.id for track in current_user.tracks]
+
     }
 
 
@@ -62,7 +66,7 @@ def create_track() -> dict:
             return {
                 "errors": {
                     "form": "Sorry, there was an error saving your track.\
-                         Please try again with."
+                         Please try again with a different file."
                 }
             }, 400
     else:

@@ -1,18 +1,19 @@
 from __future__ import annotations
+
+# typing
+from typing import Dict, List, TextIO, Union
+
+# Options
+from app.utility import SportOptions
 # GPX parsing library
 from gpxpy import parse
-from gpxpy.gpx import (
-    GPXTrackSegment, GPXTrack, MinimumMaximum, MovingData, GPXBounds,
-    UphillDownhill, GPXRoute
-)
 from gpxpy.geo import Location
-# typing
-from typing import Dict, Union, List, TextIO
+from gpxpy.gpx import (GPXBounds, GPXRoute, GPXTrack, GPXTrackSegment,
+                       MinimumMaximum, MovingData, UphillDownhill)
+
 # Models
 from .db import db
 from .trackpoint import TrackPoint
-# Options
-from app.utility import SportOptions
 
 # # Generic Variable for Route class
 # RouteType = TypeVar('RouteType', bound='Route')

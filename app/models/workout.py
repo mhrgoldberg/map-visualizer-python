@@ -1,12 +1,15 @@
 from __future__ import annotations
+
 # typings
 from typing import TextIO
+
+# gpx
+from gpxpy import parse
+from gpxpy.gpx import GPXRoute, GPXTrack, MovingData
+
 # db
 from .db import db
 from .track import Track
-# gpx
-from gpxpy import parse
-from gpxpy.gpx import GPXTrack, GPXRoute, MovingData
 
 
 class Workout(db.Model):
@@ -14,7 +17,6 @@ class Workout(db.Model):
     id: Integer, primary_key=True
     title: String(50)
     description: Text
-    distance: Float # Miles
     duration: Integer # Seconds
     created_at: DateTime, default=now
     updated_at: DateTime, default=now, onupdate=now

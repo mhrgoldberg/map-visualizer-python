@@ -1,6 +1,6 @@
 const TOGGLE_ASIDE = 'ui/TOGGLE_ASIDE'
 
-const toggleAside = () => ({
+export const toggleAside = () => ({
   type: TOGGLE_ASIDE,
 })
 
@@ -8,11 +8,10 @@ const defaultState = {
   aside: true,
 }
 
-function uiReducer(state = defaultState, action) {
+export function uiReducer(initialState = defaultState, action) {
   switch (action.type) {
     case TOGGLE_ASIDE:
       return {
-        ...initialState,
         aside: !initialState.aside,
       }
     default:

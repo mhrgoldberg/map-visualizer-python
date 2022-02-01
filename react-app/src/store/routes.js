@@ -17,12 +17,22 @@ export const resetUserRoutes = (routes) => ({
 })
 
 export const getAllRoutes = () => async (dispatch) => {
-  const res = await fetch('/api/tracks', { method: 'GET' })
-  const response = await res.json()
-  if (response.errors) {
-    dispatch(setErrors(response.errors))
+  const res = await fetch('/api/tracks/', { method: 'GET' })
+  const data = await res.json()
+  if (data.errors) {
+    dispatch(setErrors(data.errors))
   } else {
-    dispatch(RESET_USER_ROUTES)
+    dispatch(addToUserRoutes(data))
+  }
+}
+
+export const getRoute = (id) => async (dispatch) => {
+  const res = await fetch(`/api/tracks/${id}`, { method: 'GET' })
+  const data = await res.json()
+  if (data.errors) {
+    dispatch(setErrors(data.errors))
+  } else {
+    dispatch(addToUserRoutes([data]))
   }
 }
 
@@ -31,20 +41,19 @@ export const saveRoute = (payload) => async (dispatch) => {
     method: 'POST',
     body: payload,
   })
-  const response = await res.json()
-  if (response.errors) {
-    dispatch(setErrors(response.errors))
+  const data = await res.json()
+  if (data.errors) {
+    dispatch(setErrors(data.errors))
     return false
   } else {
-    dispatch(addToUserRoutes(response))
+    dispatch(addToUserRoutes(data))
     return true
   }
 }
 
 const defaultState = {
-  currentRoute: {},
   userRoutes: {},
-  ordering: [],
+  userRoutesOrdering: [],
 }
 
 export function routesReducer(state = defaultState, action) {
@@ -55,14 +64,28 @@ export function routesReducer(state = defaultState, action) {
       return newState
     }
     case ADD_TO_USER_ROUTES: {
+      // filter new data to only new routes
+      const newRoutes = {}
+      const newRoutesOrdering = action.payload.ordering.filter((id) => {
+        if (newState.userRoutes[id]) return false
+        newRoutes[id] = action.payload.dict[id]
+        return true
+      })
+      if (!newRoutesOrdering.length) return state
+
       newState.userRoutes = {
         ...state.userRoutes,
-        ...action.payload,
+        ...newRoutes,
       }
+      newState.userRoutesOrdering = [
+        ...state.userRoutesOrdering,
+        ...newRoutesOrdering,
+      ]
       return newState
     }
     case RESET_USER_ROUTES: {
       newState.userRoutes = {}
+      newState.order = []
       return newState
     }
     default:

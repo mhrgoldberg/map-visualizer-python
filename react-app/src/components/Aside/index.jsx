@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
 import { Sling as Hamburger } from 'hamburger-react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
-
+import RouteList from '../Routes'
 import { useCurrentUser } from '../utility'
-
 import Tabs from './Tabs'
 
 const CHOICES = {
@@ -23,7 +22,7 @@ export default function Aside() {
     <AsideContainer>
       <Hamburger />
       <Tabs viewType={viewType} setViewType={setViewType} CHOICES={CHOICES} />
-      {/* {viewType === CHOICES.WORKOUT ? <WorkoutList /> : <RouteList />} */}
+      {viewType === CHOICES.WORKOUT ? null : <RouteList />}
     </AsideContainer>
   )
 }

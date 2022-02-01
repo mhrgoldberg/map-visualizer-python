@@ -15,7 +15,6 @@ export default function RoutesIndex() {
       <ul>
         {routes.userRoutesOrdering.map((id) => {
           const route = routes.userRoutes[id]
-          debugger
           return (
             <li key={route.id}>
               <h3>{route.title}</h3>

@@ -63,7 +63,7 @@ const FileUploadContainer = styled.div`
   margin-top: 1rem;
   padding: 2rem;
   border-width: 0.3rem;
-  width: calc(100% - 4.6rem);
+  width: 100%;
   border-radius: var(--input-border-radius);
   border-color: ${(props) => getColor(props)};
   border-style: dashed;

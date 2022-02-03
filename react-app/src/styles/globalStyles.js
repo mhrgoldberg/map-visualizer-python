@@ -5,6 +5,10 @@ export const GlobalStyles = createGlobalStyle`
   width: device-width;
   }
 
+  *{
+    box-sizing: border-box;
+  }
+
   :root {
     /* Primary Colors */
     --primary-dark: #0b132b;
@@ -94,7 +98,7 @@ export const GlobalStyles = createGlobalStyle`
     grid-template-columns: 1fr;
     grid-gap: 2rem;
     place-items: center center;
-    width: 40rem;
+    width: 50rem;
     padding: 4rem;
     /* style */
     background-color: var(--secondary-dark);

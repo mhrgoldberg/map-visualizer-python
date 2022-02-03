@@ -33,4 +33,8 @@ const AsideContainer = styled.aside`
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+  border-right: 0.2rem solid var(--secondary-dark);
+  .hamburger-react {
+    color: var(--primary-cyan);
+  }
 `

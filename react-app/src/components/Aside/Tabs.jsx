@@ -41,10 +41,7 @@ const ToggleContainer = styled.div`
   }
 
   .workoutTab {
-    border-bottom: ${({ viewType, CHOICES }) =>
-      viewType === CHOICES.WORKOUT
-        ? 'none'
-        : '0.3rem solid var(--primary-cyan)'};
+    border-bottom: 0.3rem solid var(--primary-cyan);
     border-right: ${({ viewType, CHOICES }) =>
       viewType === CHOICES.WORKOUT
         ? '0.3rem solid var(--primary-cyan)'
@@ -57,16 +54,23 @@ const ToggleContainer = styled.div`
       viewType === CHOICES.WORKOUT
         ? '0.3rem solid var(--primary-cyan)'
         : 'none'};
+    background: ${({ viewType, CHOICES }) =>
+      viewType === CHOICES.WORKOUT
+        ? 'var(--secondary-dark)'
+        : 'var(--primary-dark)'};
   }
 
   .routeTab {
-    border-bottom: ${({ viewType, CHOICES }) =>
-      viewType === CHOICES.ROUTE ? 'none' : '0.3rem solid var(--primary-cyan)'};
+    border-bottom: 0.3rem solid var(--primary-cyan);
     border-right: ${({ viewType, CHOICES }) =>
       viewType === CHOICES.ROUTE ? '0.3rem solid var(--primary-cyan)' : 'none'};
     border-top: ${({ viewType, CHOICES }) =>
       viewType === CHOICES.ROUTE ? '0.3rem solid var(--primary-cyan)' : 'none'};
     border-left: ${({ viewType, CHOICES }) =>
       viewType === CHOICES.ROUTE ? '0.3rem solid var(--primary-cyan)' : 'none'};
+    background: ${({ viewType, CHOICES }) =>
+      viewType === CHOICES.WORKOUT
+        ? 'var(--primary-dark)'
+        : 'var(--secondary-dark)'};
   }
 `

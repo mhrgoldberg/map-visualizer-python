@@ -1,17 +1,16 @@
-import os
 import logging
+import os
+
 from flask import Flask
 from flask_cors import CORS
+from flask_login import LoginManager
 from flask_migrate import Migrate
 from flask_wtf.csrf import generate_csrf
-from flask_login import LoginManager
 
-from .models import db, User
-from .api import auth_controller, users_controller, tracks_controller
-
-from .seeds import seed_commands
-
+from .api import auth_controller, tracks_controller, users_controller
 from .config import Config
+from .models import User, db
+from .seeds import seed_commands
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -34,7 +33,6 @@ def load_user(id):
 
 # Tell flask about our seed commands
 app.cli.add_command(seed_commands)
-
 
 app.register_blueprint(auth_controller, url_prefix='/api/auth')
 app.register_blueprint(users_controller, url_prefix='/api/users')

@@ -21,7 +21,6 @@ def all_routes() -> dict:
             track.id: track.to_simple_dict() for track in current_user.tracks
         },
         "ordering": [track.id for track in current_user.tracks]
-
     }
 
 
@@ -37,11 +36,14 @@ def get_track(track_id: int) -> dict:
         return {
             "errors": {"track": "Sorry, this track does not exist."}
         }, 404
-    return track.to_dict()
+    return {
+        "dict": {track.id: track.to_dict()},
+        "ordering": [track.id]
+    }
 
 
-@tracks_controller.route("/", methods=["POST"])
-@login_required
+@ tracks_controller.route("/", methods=["POST"])
+@ login_required
 def create_track() -> dict:
     """
     Check if a file is present and a valid file type, then create a new track.
@@ -59,7 +61,10 @@ def create_track() -> dict:
                 current_user.id
             )
             return {
-                track.id: track.to_simple_dict() for track in new_tracks
+                "dict": {
+                    track.id: track.to_simple_dict() for track in new_tracks
+                },
+                "ordering": [track.id for track in current_user.tracks]
             }, 201
         except exc.SQLAlchemyError as e:
             current_app.logger.error(e)

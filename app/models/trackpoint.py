@@ -1,25 +1,13 @@
 from __future__ import annotations
 
-import polyline
-from typing import Union, List, Tuple
-from gpxpy.gpx import GPXTrackSegment, GPXTrackPoint
+from typing import List, Tuple, Union
+
+from gpxpy.gpx import GPXTrackPoint, GPXTrackSegment
+
 from .db import db
 
 
 class TrackPoint(db.Model):
-    """
-    id: Integer, primary_key=True
-    time: DateTime, nullable=False
-    latitude: Float, nullable=False
-    longitude: Float, nullable=False
-    elevation: Float
-    heart_rate = Integer
-    temperature = Integer
-    cadence = Integer
-
-    +relationships: route
-    &instance_methods: to_dict(), to_simple_dict()
-    """
     __tablename__ = "track_points"
 
     # Primary Columns
@@ -70,7 +58,7 @@ class TrackPoint(db.Model):
         Takes in a GPXTrackPoint and returns a list of TrackPoint objects
         """
         parsed_track_points: Union[List[TrackPoint], list] = []
-        coordinates: Union[List[tuple], list] = []
+
         point: GPXTrackPoint
         for point in segment.points:
             current_track_point = cls(
@@ -79,7 +67,6 @@ class TrackPoint(db.Model):
                 elevation=point.elevation,
                 time=point.time,
                 speed=point.speed or 0)
-            coordinates.append((point.latitude, point.longitude))
             parsed_track_points.append(current_track_point)
 
-        return parsed_track_points, polyline.encode(coordinates)
+        return parsed_track_points

@@ -1,27 +1,12 @@
 
-from .db import db
-from werkzeug.security import generate_password_hash, check_password_hash
+from app.utility import GenderOptions, SportOptions
 from flask_login import UserMixin
-from app.utility import SportOptions, GenderOptions
+from werkzeug.security import check_password_hash, generate_password_hash
+
+from .db import db
 
 
 class User(db.Model, UserMixin):
-    """
-    id: Integer, primary_key=True
-    username: String(255), nullable=False, unique=True
-    email: String(255), nullable=False, unique=True
-    password: String(255), nullable=False
-    gender: Enum(GenderOptions)
-    age: Integer
-    primary_sport: Enum(SportOptions)
-    created_at: DateTime, default=now
-    updated_at: DateTime, default=now, onupdate=now
-    +relationships: routes, workouts
-    &instance_methods: (
-        check_password(password), to_simple_dict, to_dict, to_routes_dict,
-        to_workouts_dict
-        )
-    """
 
     __tablename__ = 'users'
 

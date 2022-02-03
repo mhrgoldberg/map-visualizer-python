@@ -1,11 +1,14 @@
 from __future__ import annotations
 
-# typing
+import os
+import shutil
 from typing import Dict, List, TextIO, Union
 
-# Options
-from app.utility import SportOptions
-# GPX parsing library
+# utility
+import polyline
+import requests
+from app.utility import SportOptions, create_url
+from cloudinary.uploader import upload
 from gpxpy import parse
 from gpxpy.geo import Location
 from gpxpy.gpx import (GPXBounds, GPXRoute, GPXTrack, GPXTrackSegment,
@@ -15,33 +18,8 @@ from gpxpy.gpx import (GPXBounds, GPXRoute, GPXTrack, GPXTrackSegment,
 from .db import db
 from .trackpoint import TrackPoint
 
-# # Generic Variable for Route class
-# RouteType = TypeVar('RouteType', bound='Route')
-
 
 class Track(db.Model):
-    """
-    id: Integer, primary_key=True
-    title: String(50), nullable=False
-    sport_type: Enum(SportOptions), nullable=False
-    distance: Float, nullable=False
-    ascent: Float
-    descent: Float
-    polyline: Text
-    center_latitude: Float
-    center_longitude: Float
-    min_latitude: Float
-    min_longitude: Float
-    max_latitude: Float
-    max_longitude: Float
-    min_elevation: Float
-    max_elevation: Float
-    created_at: DateTime, default=now
-    updated_at: DateTime, default=now, onupdate=now
-    +relationships: user, track_points, workouts
-    &instance_methods: to_dict, to_simple_dict
-    """
-
     __tablename__ = "tracks"
     # Primary Columns
     id = db.Column(db.Integer, primary_key=True)
@@ -50,7 +28,7 @@ class Track(db.Model):
     distance = db.Column(db.Float, nullable=False)
     ascent = db.Column(db.Float)
     descent = db.Column(db.Float)
-    polyline = db.Column(db.Text)
+    polyline = db.Column(db.Text, nullable=False)
     center_latitude = db.Column(db.Float)
     center_longitude = db.Column(db.Float)
     min_latitude = db.Column(db.Float)
@@ -59,6 +37,7 @@ class Track(db.Model):
     max_longitude = db.Column(db.Float)
     min_elevation = db.Column(db.Float)
     max_elevation = db.Column(db.Float)
+    map_150px_img_url = db.Column(db.String)
 
     created_at = db.Column(
         db.DateTime(timezone=True),
@@ -117,7 +96,8 @@ class Track(db.Model):
             "distance": self.distance,
             "ascent": self.ascent,
             "descent": self.descent,
-            "polyline": self.polyline
+            "polyline": self.polyline,
+            "img_url": self.map_150px_img_url
 
         }
 
@@ -170,7 +150,7 @@ class Track(db.Model):
             min_longitude=bounds.min_longitude,
             max_latitude=bounds.max_latitude,
             max_longitude=bounds.max_longitude,
-            distance=moving_data.moving_distance,
+            distance=track.length_3d(),
             min_elevation=min_max_elevation.minimum,
             max_elevation=min_max_elevation.maximum,
             ascent=uphill_downhill.uphill,
@@ -181,8 +161,37 @@ class Track(db.Model):
         parsed_track_points: Union[List[TrackPoint], List] = []
         segment: GPXTrackSegment
         for segment in track.segments:
-            parsed_track_points, polyline = TrackPoint.create_track_points_from_gpx_segment(
+            parsed_track_points = TrackPoint.create_track_points_from_gpx_segment(
                 segment)
             new_track.track_points.extend(parsed_track_points)
-            new_track.polyline = polyline
+
+            # Reduce points to mitigate url length limits when requesting map
+            # Shorten polyline if track is longer than 50 miles
+            if new_track.distance > 80467:
+                segment.reduce_points(200)
+            else:
+                segment.reduce_points(100)
+
+            # convert updated segment to coordinates
+            coordinates = [(p.latitude, p.longitude) for p in segment.points]
+            new_track.polyline = polyline.encode(coordinates, 5)
+
+            # request img file from google maps / upload to cloudinary
+            url = create_url(new_track.polyline, 150)
+
+            r = requests.get(url, stream=True)
+
+            if r.status_code == 200:
+                with open("./app/utility/img.png", "wb") as f:
+                    r.raw.decode_content = True
+                    shutil.copyfileobj(r.raw, f)
+                img = None
+                try:
+                    img = upload("./app/utility/img.png",
+                                 tags="150-static-map")
+                except Exception as e:
+                    print(e)
+                new_track.map_150px_img_url = img["url"]
+                os.remove("./app/utility/img.png")
+
         return new_track

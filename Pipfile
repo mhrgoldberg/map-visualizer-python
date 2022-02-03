@@ -29,9 +29,11 @@ Mako = "==1.1.4"
 gpxpy = "1.4.2"
 flask-pydantic = "0.8.0"
 polyline = "*"
+requests = "*"
+cloudinary = "*"
 
 [dev-packages]
-psycopg2-binary = "==2.8.6"
+psycopg2-binary = "==2.9.3"
 autopep8 = "*"
 pylint = "*"
 flake8 = "*"

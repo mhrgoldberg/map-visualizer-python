@@ -11,8 +11,14 @@ from app.utility import SportOptions, create_url
 from cloudinary.uploader import upload
 from gpxpy import parse
 from gpxpy.geo import Location
-from gpxpy.gpx import (GPXBounds, GPXRoute, GPXTrack, GPXTrackSegment,
-                       MinimumMaximum, MovingData, UphillDownhill)
+from gpxpy.gpx import (
+    GPXBounds,
+    GPXRoute,
+    GPXTrack,
+    GPXTrackSegment,
+    MinimumMaximum,
+    UphillDownhill,
+)
 
 # Models
 from .db import db
@@ -26,8 +32,8 @@ class Track(db.Model):
     title = db.Column(db.String(50), nullable=False)
     sport_type = db.Column(db.Enum(SportOptions))
     distance = db.Column(db.Float, nullable=False)
-    ascent = db.Column(db.Float)
-    descent = db.Column(db.Float)
+    ascent = db.Column(db.Float, decimal_return_scale=2)
+    descent = db.Column(db.Float, decimal_return_scale=2)
     polyline = db.Column(db.Text, nullable=False)
     center_latitude = db.Column(db.Float)
     center_longitude = db.Column(db.Float)
@@ -35,18 +41,15 @@ class Track(db.Model):
     min_longitude = db.Column(db.Float)
     max_latitude = db.Column(db.Float)
     max_longitude = db.Column(db.Float)
-    min_elevation = db.Column(db.Float)
-    max_elevation = db.Column(db.Float)
+    min_elevation = db.Column(db.Float, decimal_return_scale=2)
+    max_elevation = db.Column(db.Float, decimal_return_scale=2)
     map_150px_img_url = db.Column(db.String)
 
-    created_at = db.Column(
-        db.DateTime(timezone=True),
-        server_default=db.func.now())
+    created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
 
     updated_at = db.Column(
-        db.DateTime(timezone=True),
-        server_default=db.func.now(),
-        onupdate=db.func.now())
+        db.DateTime(timezone=True), server_default=db.func.now(), onupdate=db.func.now()
+    )
 
     # Foreign Keys
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"))
@@ -54,7 +57,8 @@ class Track(db.Model):
     # Relationships
     user = db.relationship("User", back_populates="tracks")
     track_points = db.relationship(
-        "TrackPoint", back_populates="track", passive_deletes=True)
+        "TrackPoint", back_populates="track", passive_deletes=True
+    )
     workouts = db.relationship("Workout", back_populates="track")
 
     def to_dict(self) -> Dict[str, Union[int, float, str, List[TrackPoint]]]:
@@ -67,22 +71,13 @@ class Track(db.Model):
             "distance": self.distance,
             "ascent": self.ascent,
             "descent": self.descent,
-            "center": {
-                "lat": self.center_latitude,
-                "lng": self.center_longitude
-            },
-            "min": {
-                "lat": self.min_latitude,
-                "lng": self.min_longitude
-            },
-            "max": {
-                "lat": self.max_latitude,
-                "lng": self.max_longitude
-            },
+            "center": {"lat": self.center_latitude, "lng": self.center_longitude},
+            "min": {"lat": self.min_latitude, "lng": self.min_longitude},
+            "max": {"lat": self.max_latitude, "lng": self.max_longitude},
             "sport_type": self.sport_type,
             "track_points": [
                 track_point.to_dict() for track_point in self.track_points
-            ]
+            ],
         }
 
     def to_simple_dict(self) -> Dict[str, Union[int, float, str]]:
@@ -97,8 +92,7 @@ class Track(db.Model):
             "ascent": self.ascent,
             "descent": self.descent,
             "polyline": self.polyline,
-            "img_url": self.map_150px_img_url
-
+            "img_url": self.map_150px_img_url,
         }
 
     @classmethod
@@ -117,7 +111,8 @@ class Track(db.Model):
             # remove empty datapoints
             track.remove_empty()
             new_track = Track.create_track_from_gpx_track(
-                track, title, sport_type, user_id)
+                track, title, sport_type, user_id
+            )
             db.session.add(new_track)
             tracks.append(new_track)
         db.session.commit()
@@ -138,7 +133,7 @@ class Track(db.Model):
         bounds: GPXBounds = track.get_bounds()
         center: Location = track.get_center()
         min_max_elevation: MinimumMaximum = track.get_elevation_extremes()
-        moving_data: MovingData = track.get_moving_data()
+        # moving_data: MovingData = track.get_moving_data()
         uphill_downhill: UphillDownhill = track.get_uphill_downhill()
 
         new_track: Track = cls(
@@ -155,14 +150,15 @@ class Track(db.Model):
             max_elevation=min_max_elevation.maximum,
             ascent=uphill_downhill.uphill,
             descent=uphill_downhill.downhill,
-            user_id=user_id
+            user_id=user_id,
         )
 
         parsed_track_points: Union[List[TrackPoint], List] = []
         segment: GPXTrackSegment
         for segment in track.segments:
             parsed_track_points = TrackPoint.create_track_points_from_gpx_segment(
-                segment)
+                segment
+            )
             new_track.track_points.extend(parsed_track_points)
 
             # Reduce points to mitigate url length limits when requesting map
@@ -187,8 +183,7 @@ class Track(db.Model):
                     shutil.copyfileobj(r.raw, f)
                 img = None
                 try:
-                    img = upload("./app/utility/img.png",
-                                 tags="150-static-map")
+                    img = upload("./app/utility/img.png", tags="150-static-map")
                 except Exception as e:
                     print(e)
                 new_track.map_150px_img_url = img["url"]

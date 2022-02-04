@@ -4,5 +4,6 @@
   "python.linting.pycodestyleEnabled": false,
   "python.linting.enabled": true,
   "python.linting.mypyEnabled": false,
-  "cSpell.words": ["atemp", "pydantic"]
+  "cSpell.words": ["atemp", "pydantic"],
+  "python.formatting.provider": "black"
 }

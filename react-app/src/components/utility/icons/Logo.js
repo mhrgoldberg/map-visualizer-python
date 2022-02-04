@@ -27,7 +27,6 @@ export default class Logo extends PureComponent {
 }
 
 const Div = styled.div`
-  width: 5rem;
   padding: 0 2rem;
   display: flex;
   align-items: center;

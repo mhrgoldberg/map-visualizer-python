@@ -1,6 +1,6 @@
 import React from 'react'
-import styled from 'styled-components'
 import { useDispatch } from 'react-redux'
+import styled from 'styled-components'
 import { logout } from '../../../store/auth'
 
 export default function LogoutButton() {

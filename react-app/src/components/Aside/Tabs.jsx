@@ -25,7 +25,7 @@ export default function Tabs({ setViewType, viewType, CHOICES }) {
 const ToggleContainer = styled.div`
   display: flex;
   flex-direction: row;
-  width: 40rem;
+  width: 31rem;
   height: 5rem;
   font-size: 3rem;
 
@@ -41,7 +41,6 @@ const ToggleContainer = styled.div`
   }
 
   .workoutTab {
-    border-bottom: 0.3rem solid var(--primary-cyan);
     border-right: ${({ viewType, CHOICES }) =>
       viewType === CHOICES.WORKOUT
         ? '0.3rem solid var(--primary-cyan)'
@@ -61,7 +60,6 @@ const ToggleContainer = styled.div`
   }
 
   .routeTab {
-    border-bottom: 0.3rem solid var(--primary-cyan);
     border-right: ${({ viewType, CHOICES }) =>
       viewType === CHOICES.ROUTE ? '0.3rem solid var(--primary-cyan)' : 'none'};
     border-top: ${({ viewType, CHOICES }) =>

@@ -1,33 +1,51 @@
 import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
-
+import { toggleAside } from '../../store/ui'
 export default function Tabs({ setViewType, viewType, CHOICES }) {
+  const isAsideOpen = useSelector(({ ui }) => ui.aside)
+  const dispatch = useDispatch()
   const clickWorkout = () => {
     setViewType(CHOICES.WORKOUT)
+    if (!isAsideOpen) dispatch(toggleAside())
   }
 
   const clickRoute = () => {
     setViewType(CHOICES.ROUTE)
+    if (!isAsideOpen) dispatch(toggleAside())
   }
 
   return (
-    <ToggleContainer viewType={viewType} CHOICES={CHOICES}>
-      <div className="routeTab" onClick={clickRoute}>
-        {CHOICES.ROUTE}
+    <ToggleContainerOpen
+      isAsideOpen={isAsideOpen}
+      viewType={viewType}
+      CHOICES={CHOICES}
+    >
+      <div
+        className={isAsideOpen ? 'routeTab open' : 'routeTab closed'}
+        onClick={clickRoute}
+      >
+        {isAsideOpen ? CHOICES.ROUTE : 'R'}
       </div>
-      <div className="workoutTab" onClick={clickWorkout}>
-        {CHOICES.WORKOUT}
+      <div
+        className={isAsideOpen ? 'workoutTab open' : 'workoutTab closed'}
+        onClick={clickWorkout}
+      >
+        {isAsideOpen ? CHOICES.WORKOUT : 'W'}
       </div>
-    </ToggleContainer>
+    </ToggleContainerOpen>
   )
 }
 
-const ToggleContainer = styled.div`
+const ToggleContainerOpen = styled.div`
   display: flex;
-  flex-direction: row;
-  width: 31rem;
-  height: 5rem;
+  flex-direction: ${({ isAsideOpen }) => (isAsideOpen ? 'row' : 'column')};
+  width: ${({ isAsideOpen }) => (isAsideOpen ? '31rem' : '7rem')};
+  height: ${({ isAsideOpen }) => (isAsideOpen ? '5rem' : '10rem')};
+  border-top: ${({ isAsideOpen }) =>
+    isAsideOpen ? 'none' : '0.3rem solid var(--secondary-dark)'};
   font-size: 3rem;
+  transition: all 0.4s;
 
   div {
     display: flex;
@@ -57,6 +75,9 @@ const ToggleContainer = styled.div`
       viewType === CHOICES.WORKOUT
         ? 'var(--secondary-dark)'
         : 'var(--primary-dark)'};
+    cursor: ${({ viewType, CHOICES }) =>
+      viewType === CHOICES.WORKOUT ? '' : 'pointer'};
+    transition: all 0.2s;
   }
 
   .routeTab {
@@ -70,5 +91,19 @@ const ToggleContainer = styled.div`
       viewType === CHOICES.WORKOUT
         ? 'var(--primary-dark)'
         : 'var(--secondary-dark)'};
+    cursor: ${({ viewType, CHOICES }) =>
+      viewType === CHOICES.ROUTE ? '' : 'pointer'};
+    transition: all 0.2s;
+  }
+
+  .closed {
+    border: none;
+    background: None;
+    width: 7rem;
+    cursor: pointer;
+  }
+
+  .closed:hover {
+    color: var(--primary-cyan);
   }
 `

@@ -60,7 +60,7 @@ const Header = styled.header`
     align-content: center;
     align-items: center;
     width: 100%;
-    max-width: 120rem;
+    /* max-width: 120rem; */
     height: var(--nav-height);
   }
 `

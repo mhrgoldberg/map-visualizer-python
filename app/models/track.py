@@ -7,7 +7,7 @@ from typing import Dict, List, TextIO, Union
 # utility
 import polyline
 import requests
-from app.utility import SportOptions, create_url
+from app.utility import SportOptions, create_url, get_feet, get_miles
 from cloudinary.uploader import upload
 from gpxpy import parse
 from gpxpy.geo import Location
@@ -68,9 +68,9 @@ class Track(db.Model):
         return {
             "id": self.id,
             "title": self.title,
-            "distance": self.distance,
-            "ascent": self.ascent,
-            "descent": self.descent,
+            "distance": get_miles(self.distance),
+            "ascent": get_feet(self.ascent),
+            "descent": get_feet(self.descent),
             "center": {"lat": self.center_latitude, "lng": self.center_longitude},
             "min": {"lat": self.min_latitude, "lng": self.min_longitude},
             "max": {"lat": self.max_latitude, "lng": self.max_longitude},
@@ -88,10 +88,9 @@ class Track(db.Model):
             "id": self.id,
             "title": self.title,
             "sport_type": self.sport_type.name if self.sport_type else None,
-            "distance": self.distance,
-            "ascent": self.ascent,
-            "descent": self.descent,
-            "polyline": self.polyline,
+            "distance": get_miles(self.distance),
+            "ascent": get_feet(self.ascent),
+            "descent": get_feet(self.descent),
             "img_url": self.map_150px_img_url,
         }
 

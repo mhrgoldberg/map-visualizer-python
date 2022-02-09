@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { toggleAside } from '../../store/ui'
+
 export default function Tabs({ setViewType, viewType, CHOICES }) {
   const isAsideOpen = useSelector(({ ui }) => ui.aside)
   const dispatch = useDispatch()
@@ -99,7 +100,7 @@ const ToggleContainerOpen = styled.div`
   .closed {
     border: none;
     background: None;
-    width: 7rem;
+    width: 100%;
     cursor: pointer;
   }
 

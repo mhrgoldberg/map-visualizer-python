@@ -242,7 +242,14 @@ export const GlobalStyles = createGlobalStyle`
   /* Media Queries */
   @media only screen and (max-width: 550px) {
     html {
-      font-size: 45%;
+      font-size: 55%;
     }
+
   }
+  /* @media only screen and (min-width: 2000px) {
+    html {
+      font-size: 70%;
+    }
+
+  } */
   `

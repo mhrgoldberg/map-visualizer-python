@@ -4,18 +4,20 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import { toggleAside } from '../../store/ui'
 import RouteList from '../Routes'
+import { useCurrentUser } from '../utility'
 import Tabs from './Tabs'
 
 const CHOICES = {
-  WORKOUT: 'Workout',
-  ROUTE: 'Route',
+  WORKOUT: 'Workouts',
+  ROUTE: 'Routes',
 }
 
 export default function Aside() {
   const [viewType, setViewType] = useState(CHOICES.ROUTE)
   const isAsideOpen = useSelector(({ ui }) => ui.aside)
   const dispatch = useDispatch()
-
+  const isLoggedIn = !!useCurrentUser()
+  if (!isLoggedIn) return null
   return (
     <AsideContainer isAsideOpen={isAsideOpen}>
       <span>
@@ -32,12 +34,13 @@ export default function Aside() {
 
 const AsideContainer = styled.aside`
   width: ${({ isAsideOpen }) => (isAsideOpen ? '40rem' : '7rem')};
-  height: calc(100vh - calc(var(--nav-height)));
+  min-height: calc(100vh - calc(var(--nav-height)));
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   border-right: 0.2rem solid var(--secondary-dark);
   transition: width 0.4s;
+  grid-area: aside;
 
   span {
     display: flex;
@@ -50,8 +53,16 @@ const AsideContainer = styled.aside`
   }
 
   .hamburger-react {
-    color: ${({ isAsideOpen }) => (isAsideOpen ? 'var(--primary-cyan)' : '')};
+    color: ${({ isAsideOpen }) =>
+      isAsideOpen ? 'var(--primary-cyan)' : 'var(--primary-light)'};
     margin-left: ${({ isAsideOpen }) => (isAsideOpen ? '4rem' : '1rem')};
     transition: all 0.4s;
+  }
+  .hamburger-react:hover {
+    color: ${({ isAsideOpen }) =>
+      isAsideOpen ? 'var(--primary-light)' : 'var(--primary-cyan)'};
+  }
+
+  @media (max-width: 768px) {
   }
 `

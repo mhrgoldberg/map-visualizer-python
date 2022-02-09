@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react'
-import { BrowserRouter, Route } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
+import { BrowserRouter, Route } from 'react-router-dom'
 import styled from 'styled-components'
-
-import { authenticate } from './store/auth'
-import { AuthForm, ProtectedRoute } from './components/AuthForm'
-import NavBar from './components/Navbar'
-import UsersList from './components/Profile/UsersList'
-import User from './components/Profile/User'
-import NewForm from './components/NewForm'
-import Dashboard from './components/Dashboard'
 import Aside from './components/Aside'
+import { AuthForm, ProtectedRoute } from './components/AuthForm'
+import Dashboard from './components/Dashboard'
+import NavBar from './components/Navbar'
+import NewForm from './components/NewForm'
+import User from './components/Profile/User'
+import UsersList from './components/Profile/UsersList'
+import { authenticate } from './store/auth'
 
 function App() {
   const dispatch = useDispatch()
@@ -18,9 +17,10 @@ function App() {
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
-    dispatch(authenticate()).then(() => {
+    ;(async () => {
+      await dispatch(authenticate())
       setLoaded(true)
-    })
+    })()
   }, [dispatch])
 
   if (!loaded) {
@@ -31,16 +31,21 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <MainContent>
-        <Aside />
+        {/* Auth Routes */}
         <Route path="/login" exact={true}>
           <AuthForm form="Login" />
         </Route>
         <Route path="/sign-up" exact={true}>
           <AuthForm form="Sign Up" />
         </Route>
-        <ProtectedRoute path="/" exact={true}>
-          <Dashboard />
-        </ProtectedRoute>
+        <Route path="/" exact={true}>
+          <AuthForm form="Login" />
+        </Route>
+
+        {/* Aside */}
+        <Aside />
+
+        {/* Protected Routes */}
         <ProtectedRoute path="/new" exact={true}>
           <NewForm />
         </ProtectedRoute>
@@ -56,17 +61,16 @@ function App() {
         <ProtectedRoute path="/workouts/:id" exact={true}>
           <UsersList />
         </ProtectedRoute>
+        <ProtectedRoute path="/" exact={true}>
+          <Dashboard />
+        </ProtectedRoute>
       </MainContent>
-      <Route path="/" exact={true}>
-        <AuthForm form="Login" />
-      </Route>
     </BrowserRouter>
   )
 }
 
 const MainContent = styled.div`
   display: flex;
-  flex-direction: row;
 `
 
 export default App

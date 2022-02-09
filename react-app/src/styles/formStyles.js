@@ -10,6 +10,7 @@ export const FormContainer = styled.div`
   max-width: 120rem;
   min-height: 50rem;
   margin: auto;
+  grid-area: main;
 
   .header {
     /* container grid placement */

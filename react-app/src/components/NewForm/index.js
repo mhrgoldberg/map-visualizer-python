@@ -1,6 +1,6 @@
 import React from 'react'
-import RouteForm from './RouteForm'
 import { FormContainer } from '../../styles/formStyles'
+import RouteForm from './RouteForm'
 
 export default function NewForm() {
   return (

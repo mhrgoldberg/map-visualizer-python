@@ -1,6 +1,7 @@
 import os
-from app.models import db, Workout, Track, User
 from typing import TextIO
+
+from app.models import Track, User, Workout, db
 
 
 def seed_workouts():

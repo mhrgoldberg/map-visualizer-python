@@ -58,11 +58,17 @@ def create_track() -> dict:
             }, 201
         except exc.SQLAlchemyError as e:
             current_app.logger.error(e)
+    
+            if e.code == '9h9h':
+                return {
+                    "errors": {
+                        "title": "Sorry, title too long. (20 Characters max)",
+                    }
+                }, 400
             return (
                 {
                     "errors": {
-                        "form": "Sorry, there was an error saving your track.\
-                         Please try again with a different file."
+                        "form": "Sorry, there was an error saving your track. Please try again with a different file."
                     }
                 },
                 400,

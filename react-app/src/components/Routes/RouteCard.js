@@ -5,7 +5,7 @@ export default function RouteCard({ route }) {
   return (
     <RouteLi>
       <NavLink to={`/routes/${route.id}`}>
-        <h3>{route.title}</h3>
+        <h5>{route.title}</h5>
       </NavLink>
       <img src={route.img_url} alt="" />
       <p className="sport-type">
@@ -39,7 +39,7 @@ const RouteLi = styled.li`
     'img title title'
     'img sport-type distance'
     'img ascent descent';
-  grid-template-columns: 153px auto auto;
+  grid-template-columns: 175px auto auto;
   p {
     text-align: center;
     font-size: 1.4rem;
@@ -51,7 +51,7 @@ const RouteLi = styled.li`
     align-items: center;
     flex-direction: column;
     label {
-      font-size: 1.5rem;
+      font-size: 1.4rem;
       font-weight: bold;
       color: var(--primary-cyan);
     }

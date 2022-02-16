@@ -11,14 +11,8 @@ from app.utility import SportOptions, create_url, get_feet, get_miles
 from cloudinary.uploader import upload
 from gpxpy import parse
 from gpxpy.geo import Location
-from gpxpy.gpx import (
-    GPXBounds,
-    GPXRoute,
-    GPXTrack,
-    GPXTrackSegment,
-    MinimumMaximum,
-    UphillDownhill,
-)
+from gpxpy.gpx import (GPXBounds, GPXRoute, GPXTrack, GPXTrackSegment,
+                       MinimumMaximum, UphillDownhill)
 
 # Models
 from .db import db
@@ -29,7 +23,7 @@ class Track(db.Model):
     __tablename__ = "tracks"
     # Primary Columns
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(50), nullable=False)
+    title = db.Column(db.String(20), nullable=False)
     sport_type = db.Column(db.Enum(SportOptions))
     distance = db.Column(db.Float, nullable=False)
     ascent = db.Column(db.Float)
@@ -43,7 +37,7 @@ class Track(db.Model):
     max_longitude = db.Column(db.Float)
     min_elevation = db.Column(db.Float)
     max_elevation = db.Column(db.Float)
-    map_150px_img_url = db.Column(db.String)
+    map_175px_img_url = db.Column(db.String)
 
     created_at = db.Column(db.DateTime(timezone=True), server_default=db.func.now())
 
@@ -91,7 +85,7 @@ class Track(db.Model):
             "distance": get_miles(self.distance),
             "ascent": get_feet(self.ascent),
             "descent": get_feet(self.descent),
-            "img_url": self.map_150px_img_url,
+            "img_url": self.map_175px_img_url,
         }
 
     @classmethod
@@ -172,7 +166,7 @@ class Track(db.Model):
             new_track.polyline = polyline.encode(coordinates, 5)
 
             # request img file from google maps / upload to cloudinary
-            url = create_url(new_track.polyline, 150)
+            url = create_url(new_track.polyline, 175)
 
             r = requests.get(url, stream=True)
 
@@ -185,7 +179,7 @@ class Track(db.Model):
                     img = upload("./app/utility/img.png", tags="150-static-map")
                 except Exception as e:
                     print(e)
-                new_track.map_150px_img_url = img["url"]
+                new_track.map_175px_img_url = img["url"]
                 os.remove("./app/utility/img.png")
 
         return new_track

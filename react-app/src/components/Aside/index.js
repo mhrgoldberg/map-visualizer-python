@@ -33,7 +33,7 @@ export default function Aside() {
 }
 
 const AsideContainer = styled.aside`
-  width: ${({ isAsideOpen }) => (isAsideOpen ? '40rem' : '7rem')};
+  width: ${({ isAsideOpen }) => (isAsideOpen ? '44rem' : '7rem')};
   min-height: calc(100vh - calc(var(--nav-height)));
   display: flex;
   flex-direction: column;
@@ -55,7 +55,7 @@ const AsideContainer = styled.aside`
   .hamburger-react {
     color: ${({ isAsideOpen }) =>
       isAsideOpen ? 'var(--primary-cyan)' : 'var(--primary-light)'};
-    margin-left: ${({ isAsideOpen }) => (isAsideOpen ? '4rem' : '1rem')};
+    margin-left: ${({ isAsideOpen }) => (isAsideOpen ? '8rem' : '1rem')};
     transition: all 0.4s;
   }
   .hamburger-react:hover {

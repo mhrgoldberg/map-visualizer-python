@@ -1,10 +1,12 @@
 import React from 'react'
+import { NavLink } from 'react-router-dom'
 import styled from 'styled-components'
-
 export default function RouteCard({ route }) {
   return (
     <RouteLi>
-      <h3>{route.title}</h3>
+      <NavLink to={`/routes/${route.id}`}>
+        <h3>{route.title}</h3>
+      </NavLink>
       <img src={route.img_url} alt="" />
       <p className="sport-type">
         <label>Sport Type</label>
@@ -26,9 +28,9 @@ export default function RouteCard({ route }) {
 const RouteLi = styled.li`
   border-bottom: 0.3rem solid var(--primary-dark);
   border-radius: 2rem;
+  margin: 0.5rem 0;
   overflow: hidden;
   background: var(--secondary-dark);
-  /* padding: 0.5rem; */
 
   /* layout */
   display: grid;
@@ -40,8 +42,8 @@ const RouteLi = styled.li`
   grid-template-columns: 153px auto auto;
   p {
     text-align: center;
+    font-size: 1.4rem;
     border-radius: 0.3rem;
-    /* background: var(--primary-dark); */
     margin: 0.3rem;
     padding: 0.2rem;
     display: flex;
@@ -56,11 +58,6 @@ const RouteLi = styled.li`
   }
   .sport-type {
     grid-area: sport-type;
-    /* background: none;
-    align-self: center;
-    color: var(--primary-cyan);
-    font-size: 2rem;
-    font-weight: bold; */
   }
   .distance {
     grid-area: distance;
@@ -74,12 +71,11 @@ const RouteLi = styled.li`
     grid-area: descent;
   }
 
-  h3 {
+  a {
     grid-area: title;
     justify-self: center;
   }
   img {
-    /* border-right: 0.3rem solid var(--primary-dark); */
     grid-area: img;
   }
 `

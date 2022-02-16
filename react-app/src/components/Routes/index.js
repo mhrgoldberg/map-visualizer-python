@@ -27,7 +27,7 @@ const Ul = styled.ul`
   border: 0.3rem solid var(--primary-dark);
   border-top: none;
   margin-top: 0.5rem;
-  /* border-radius: 3rem; */
+
   /* Overflow */
   overflow: scroll;
   -ms-overflow-style: none; /* IE and Edge */

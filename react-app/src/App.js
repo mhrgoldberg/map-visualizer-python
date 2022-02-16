@@ -7,8 +7,8 @@ import { AuthForm, ProtectedRoute } from './components/AuthForm'
 import Dashboard from './components/Dashboard'
 import NavBar from './components/Navbar'
 import NewForm from './components/NewForm'
-import User from './components/Profile/User'
 import UsersList from './components/Profile/UsersList'
+import RouteShow from './components/Routes/RouteShow'
 import { authenticate } from './store/auth'
 
 function App() {
@@ -53,7 +53,7 @@ function App() {
           <UsersList />
         </ProtectedRoute>
         <ProtectedRoute path="/routes/:id" exact={true}>
-          <User />
+          <RouteShow />
         </ProtectedRoute>
         <ProtectedRoute path="/workouts" exact={true}>
           <UsersList />

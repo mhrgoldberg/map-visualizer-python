@@ -63,37 +63,57 @@ const ToggleContainerOpen = styled.div`
     border-right: ${({ viewType, CHOICES }) =>
       viewType === CHOICES.WORKOUT
         ? '0.3rem solid var(--primary-cyan)'
-        : 'none'};
+        : '0.3rem solid var(--primary-dark)'};
     border-top: ${({ viewType, CHOICES }) =>
       viewType === CHOICES.WORKOUT
         ? '0.3rem solid var(--primary-cyan)'
-        : 'none'};
+        : '0.3rem solid var(--primary-dark)'};
     border-left: ${({ viewType, CHOICES }) =>
       viewType === CHOICES.WORKOUT
         ? '0.3rem solid var(--primary-cyan)'
-        : 'none'};
+        : '0.3rem solid var(--primary-dark)'};
     background: ${({ viewType, CHOICES }) =>
       viewType === CHOICES.WORKOUT
         ? 'var(--secondary-dark)'
         : 'var(--primary-dark)'};
     cursor: ${({ viewType, CHOICES }) =>
       viewType === CHOICES.WORKOUT ? '' : 'pointer'};
-    transition: all 0.2s;
   }
 
   .routeTab {
     border-right: ${({ viewType, CHOICES }) =>
-      viewType === CHOICES.ROUTE ? '0.3rem solid var(--primary-cyan)' : 'none'};
+      viewType === CHOICES.ROUTE
+        ? '0.3rem solid var(--primary-cyan)'
+        : '0.3rem solid var(--primary-dark)'};
     border-top: ${({ viewType, CHOICES }) =>
-      viewType === CHOICES.ROUTE ? '0.3rem solid var(--primary-cyan)' : 'none'};
+      viewType === CHOICES.ROUTE
+        ? '0.3rem solid var(--primary-cyan)'
+        : '0.3rem solid var(--primary-dark)'};
     border-left: ${({ viewType, CHOICES }) =>
-      viewType === CHOICES.ROUTE ? '0.3rem solid var(--primary-cyan)' : 'none'};
+      viewType === CHOICES.ROUTE
+        ? '0.3rem solid var(--primary-cyan)'
+        : '0.3rem solid var(--primary-dark)'};
     background: ${({ viewType, CHOICES }) =>
       viewType === CHOICES.WORKOUT
         ? 'var(--primary-dark)'
         : 'var(--secondary-dark)'};
     cursor: ${({ viewType, CHOICES }) =>
       viewType === CHOICES.ROUTE ? '' : 'pointer'};
+    transition: all 0.2s;
+  }
+  .workoutTab:hover {
+    color: ${({ viewType, CHOICES }) =>
+      viewType === CHOICES.WORKOUT
+        ? 'var(--primary-light)'
+        : 'var(--primary-cyan)'};
+    transition: all 0.2s;
+  }
+
+  .routeTab:hover {
+    color: ${({ viewType, CHOICES }) =>
+      viewType === CHOICES.ROUTE
+        ? 'var(--primary-light)'
+        : 'var(--primary-cyan)'};
     transition: all 0.2s;
   }
 

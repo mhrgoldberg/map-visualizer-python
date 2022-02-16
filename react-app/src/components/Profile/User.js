@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 function User() {
@@ -8,9 +8,7 @@ function User() {
   const { id } = useParams()
 
   useEffect(() => {
-    if (!id) {
-      return
-    }
+    if (!id) return
     ;(async () => {
       const response = await fetch(`/api/users/${id}`)
       const user = await response.json()
@@ -18,9 +16,7 @@ function User() {
     })()
   }, [id])
 
-  if (!user) {
-    return null
-  }
+  if (!user) return <p>loading...</p>
 
   return (
     <ul>

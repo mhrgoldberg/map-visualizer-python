@@ -32,7 +32,7 @@ export const getRoute = (id) => async (dispatch) => {
   if (data.errors) {
     dispatch(setErrors(data.errors))
   } else {
-    dispatch(addToUserRoutes([data]))
+    dispatch(setRoute(data))
   }
 }
 
@@ -52,6 +52,7 @@ export const saveRoute = (payload) => async (dispatch) => {
 }
 
 const defaultState = {
+  currentRoute: {},
   userRoutes: {},
   userRoutesOrdering: [],
 }
@@ -60,7 +61,7 @@ export function routesReducer(state = defaultState, action) {
   const newState = { ...state }
   switch (action.type) {
     case SET_ROUTE: {
-      newState.userRoutes[action.payload.id] = action.payload.userRoutes
+      newState.currentRoute = action.payload
       return newState
     }
     case ADD_TO_USER_ROUTES: {

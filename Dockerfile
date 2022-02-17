@@ -1,4 +1,4 @@
-FROM node:12 AS build-stage
+FROM node:16 AS build-stage
 
 WORKDIR /react-app
 COPY react-app/. .
@@ -10,12 +10,13 @@ COPY react-app/. .
 RUN npm install
 RUN npm run build
 
-FROM python:3.9
+FROM python:3.10
 
 # Setup Flask environment
 ENV FLASK_APP=app
 ENV FLASK_ENV=production
 ENV SQLALCHEMY_ECHO=True
+ENV PORT=8000
 
 EXPOSE 8000
 

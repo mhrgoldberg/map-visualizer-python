@@ -35,7 +35,7 @@ services:
     env_file:
       - ./.env.production
     depends_on:
-      - db
+      - postgres
     networks:
       - default
     command: flask db upgrade

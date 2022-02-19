@@ -13,7 +13,7 @@ services:
     env_file:
       - ./.env.production
     volumes:
-      - .map_visualer_data:/var/www/data/map_visualer_data
+      - errors.log:/var/www/data/errors.log
     
 
   postgres:
@@ -29,3 +29,4 @@ services:
 
 volumes:
   postgres-data:
+  errors.log:

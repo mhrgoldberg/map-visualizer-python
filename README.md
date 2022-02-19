@@ -43,13 +43,14 @@
 5. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
 
 ---
-*IMPORTANT!*
-   If you add any python dependencies to your pipfiles, you'll need to regenerate your requirements.txt before deployment.
-   You can do this by running:
 
-   ```bash
-   pipenv lock -r > requirements.txt
-   ```
+_IMPORTANT!_
+If you add any python dependencies to your pipfiles, you'll need to regenerate your requirements.txt before deployment.
+You can do this by running:
+
+```bash
+pipenv lock -r > requirements.txt
+```
 
 _ALSO IMPORTANT!_
 psycopg2-binary MUST remain a dev dependency because you can't install it on alpine-linux.
@@ -99,3 +100,38 @@ There is a layer in the Dockerfile that will install psycopg2 (not binary) for u
 10. Under Settings find "Config Vars" and add any additional/secret .env variables.
 
 11. profit
+
+## Deploy with Docker
+
+1. Pull down code to server from github and place in the `srv` folder
+
+2. Make a `.env.production.db`:
+
+   ```bash
+   POSTGRES_USER="{user}"
+   POSTGRES_DB="{db}"
+   POSTGRES_PASSWORD="{password}"
+   ```
+
+3. Make a `.env.production`:
+
+   ```bash
+   FLASK_ENV="production"
+   SECRET_KEY="{secret code for your key}"
+   DATABASE_URL="postgresql://{user}:{password}@{db_name}"
+   CLOUDINARY_URL="{cloudinary env variable url found on your Cloudinary dashboard}"
+   ```
+
+4. Run the below command to migrate and seed the database:
+
+   ```bash
+      docker-compose up -f "docker-compose-migrate.yml"
+   ```
+
+5. Run the below command to start the app running on port 8000:
+
+   ```bash
+      docker-compose up
+   ```
+
+6. Expose port 8000 behind a reverse proxy of your choice!

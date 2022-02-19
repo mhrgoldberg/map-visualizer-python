@@ -12,8 +12,7 @@ services:
       - postgres
     env_file:
       - ./.env.production
-    volumes:
-      - errors.log:/var/www/data/errors.log
+
     
 
   postgres:
@@ -29,4 +28,3 @@ services:
 
 volumes:
   postgres-data:
-  errors.log:
